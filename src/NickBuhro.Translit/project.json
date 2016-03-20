@@ -1,0 +1,24 @@
+﻿{
+  "version": "1.0.0-beta",
+  "description": "NickBuhro.Translit Class Library",
+  "summary": "Library for cyrillic-latin transliteration (support only slavik languages) by GOST 7.79-2000 (ISO 9).",
+  "authors": [ "Nicholas Buhro" ],
+  "tags": [ "translit", "cyrillic", "slavic" ],
+  "projectUrl": "https://github.com/nick-buhro/Translit",
+  "licenseUrl": "https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE",
+  "copyright": "Copyright (c) 2016 Nicholas Buhro",
+  "requireLicenseAcceptance": false,
+
+  "frameworks": {
+    "net451": { },
+    "dotnet5.4": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Threading": "4.0.11-beta-23516"
+      }
+    }
+  }
+}
