@@ -10,14 +10,14 @@
   "requireLicenseAcceptance": false,
 
   "frameworks": {
-    "net451": { },
+    "net20": { },
+    "net35-client": { },
+    "net40-client": { },
+    "net45": { },
     "dotnet5.4": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
+        "System.Collections": "4.0.11-beta-23516"
       }
     }
   }
