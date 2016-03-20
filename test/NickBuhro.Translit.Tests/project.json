@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "NickBuhro.Translit.Tests Class Library",
   "authors": [ "nbuhr" ],
@@ -8,6 +8,7 @@
 
   "dependencies": {
     "NickBuhro.NumToWords": "1.0.0-beta",
+    "NickBuhro.Translit": "1.0.0-beta",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204"
   },
