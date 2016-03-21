@@ -14,6 +14,7 @@
     "net35-client": { },
     "net40-client": { },
     "net45": { },
+    "dnx450": { },
     "dotnet5.4": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23516",

@@ -42,7 +42,7 @@ using Xunit;
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace NickBuhro.Tests
+namespace NickBuhro.Translit.Tests
 {
 	partial class TransliterationTests
 	{
