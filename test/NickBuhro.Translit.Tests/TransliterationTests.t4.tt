@@ -51,7 +51,7 @@ namespace NickBuhro.Translit.Tests
 		private static readonly string[][] TestCases =
 	    {
 <# for (var i = 0; i < data.Count; i++) { #>
-			new []	// <#=i.ToString("00")#>
+			new [] // <#=i.ToString("00")#>
 			{
 			    @"<#=data[i][0]#>",
                 @"<#=data[i][1]#>"

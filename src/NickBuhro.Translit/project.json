@@ -10,7 +10,6 @@
   "requireLicenseAcceptance": false,
 
   "frameworks": {
-    "net20": { },
     "net35-client": { },
     "net40-client": { },
     "net45": { },
