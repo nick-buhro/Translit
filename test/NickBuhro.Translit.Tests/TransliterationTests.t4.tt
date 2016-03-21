@@ -22,6 +22,14 @@
 		data.Add(new [] {lines[j], lines[j+1]});
 		j += 2;
 	}
+
+	// Long string test
+	var lstCyrillic = string.Join(Environment.NewLine, data.Select(l => l[0]));
+	var lstLatin = string.Join(Environment.NewLine, data.Select(l => l[1]));
+
+	const int repeatCount = 100;
+	lstCyrillic = string.Concat(Enumerable.Repeat(lstCyrillic, repeatCount));
+	lstLatin = string.Concat(Enumerable.Repeat(lstLatin, repeatCount));
 #>
 using Xunit;
 
@@ -38,24 +46,62 @@ namespace NickBuhro.Tests
 {
 	partial class TransliterationTests
 	{
+		#region Test cases
+
+		private static readonly string[][] TestCases =
+	    {
+<# for (var i = 0; i < data.Count; i++) { #>
+			new []	// <#=i.ToString("00")#>
+			{
+			    @"<#=data[i][0]#>",
+                @"<#=data[i][1]#>"
+			},
+<# } #>
+		};
+
+		#endregion
+
+		#region Long string test case
+
+		private static readonly string[] LongStringTestCase = 
+		{
+@"<#=lstCyrillic#>",
+
+@"<#=lstLatin#>"
+		};
+
+		#endregion
+
+		#region Test methods
+
 <# for (var i = 0; i < data.Count; i++) { #>
 		[Fact]
-		public void RussianToLatinTest<#=(i+1).ToString("00")#>()
+		public void RussianToLatin<#=i.ToString("00")#>Test()
 		{
-			var cyrillic = @"<#=data[i][0]#>";
-			var latin = @"<#=data[i][1]#>";
-			RussianToLatinTestHelper(cyrillic, latin);
+			var testCase = TestCases[<#=i#>];
+			RussianToLatinTestHelper(testCase[0], testCase[1]);
 		}
 
 		[Fact]
-		public void LatinToRussianTest<#=(i+1).ToString("00")#>()
+		public void LatinToRussian<#=i.ToString("00")#>Test()
 		{
-			var cyrillic = @"<#=data[i][0]#>";
-			var latin = @"<#=data[i][1]#>";
-			LatinToRussianTestHelper(latin, cyrillic);
+			var testCase = TestCases[<#=i#>];
+			LatinToRussianTestHelper(testCase[1], testCase[0]);
 		}
 
 <# } #>
+		[Fact]
+		public void RussianToLatinLongStringTest()
+		{		
+			RussianToLatinTestHelper(LongStringTestCase[0], LongStringTestCase[1]);
+		}
+
+		[Fact]
+		public void LatinToRussianLongStringTest()
+		{
+			LatinToRussianTestHelper(LongStringTestCase[1], LongStringTestCase[0]);
+		}
+
+		#endregion
 	}
 }
-
