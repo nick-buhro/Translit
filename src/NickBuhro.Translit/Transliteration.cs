@@ -30,7 +30,8 @@ namespace NickBuhro.Translit
         /// <returns>Cyrillyc string.</returns>
         public static string LatinToCyrillyc(string latinSource, Language language = Language.Unknown)
         {
-            throw new NotImplementedException();
+            return new LatinToCyrillicConverter(latinSource, language)
+                .Convert();
         }
     }
 }
