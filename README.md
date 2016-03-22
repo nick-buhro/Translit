@@ -4,7 +4,7 @@ C# library for cyrillic-latin transliteration.
 
 ## Features
 
-It implements transliteration by [GOST] ([ISO 9]) on System B (only for slavik languages). 
+It implements transliteration by [GOST] \([ISO 9]) on System B (only for slavik languages). 
 
 Both direction transliteration is supported:
 * cyrillyc to latin
