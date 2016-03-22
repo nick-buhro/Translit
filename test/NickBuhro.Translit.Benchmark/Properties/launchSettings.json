@@ -1,3 +1,8 @@
 {
-  "profiles": {}
+  "profiles": {
+    "NickBuhro.Translit.Benchmark": {
+      "commandName": "NickBuhro.Translit.Benchmark",
+      "sdkVersion": "dnx-clr-win-x64.1.0.0-rc1-update1"
+    }
+  }
 }
