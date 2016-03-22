@@ -25,6 +25,10 @@ namespace NickBuhro.Translit.Implementation
             _src = source;            
         }
 
+        /// <summary>
+        /// Detransliterate source. Should be invoked only once.
+        /// </summary>
+        /// <returns>Detransliterated cyrillic string.</returns>
         public string Convert()
         {
             Debug.Assert(_ruleSet != null);
