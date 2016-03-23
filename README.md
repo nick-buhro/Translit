@@ -2,6 +2,8 @@
 
 C# library for cyrillic-latin transliteration.
 
+The current version of the library is also [available on NuGet](https://www.nuget.org/packages/NickBuhro.Translit).
+
 ## Features
 
 It implements transliteration by 

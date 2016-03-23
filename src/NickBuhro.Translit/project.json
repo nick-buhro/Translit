@@ -1,6 +1,7 @@
-﻿{  
+﻿{
   "version": "1.0.0",
-  "description": "C# library for cyrillic-latin transliteration.",
+  "title": "Transliteration",
+  "description": "Library for cyrillic-latin transliteration.",
   "summary": "Transliteration by GOST 7.79-2000 (ISO 9) System B (only for slavik languages).",
   "authors": [ "Nicholas Buhro" ],
   "tags": [ "translit", "transliteration", "cyrillic", "slavic", "iso-9" ],
