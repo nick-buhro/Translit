@@ -1,15 +1,7 @@
 # NickBuhro.Translit.Tests.TestCase
 
-This folder contain test cases.
-
-
-## Folder structure
-
-This folder contains test cases for all languages.
+This folder contain test cases for all languages.
 Test cases for specific language should be located in subfolder (subfolder name = target language).
-
-
-## Files
 
 All cases are separated into files of 2 types:
 
@@ -17,10 +9,16 @@ All cases are separated into files of 2 types:
 2. RoundXX.txt
 
 
-### FullXX.txt
+## FullXX.txt
 
-File with accurate test cases that contains 2 parts: cyrillic string and latin string.
-So it could be separately tested cyrillic-to-latin and latin-to-cyrillic convertations.
+File with accurate test cases.
+
+One file can contain many test cases. 
+Test cases should be separated by one or more empty lines.
+
+One test case should be represented by 2 lines: cyrillic and latin values.
+Values should be separated by new line (one value = one line).
+
 File format:
 	
 	[Cyrillic value]
@@ -32,27 +30,23 @@ File format:
 
 Example:
 	
-	Славься, Отечество наше свободное,
+	РЎР»Р°РІСЊСЃСЏ, РћС‚РµС‡РµСЃС‚РІРѕ РЅР°С€Рµ СЃРІРѕР±РѕРґРЅРѕРµ,
 	Slav`sya, Otechestvo nashe svobodnoe,
 
-	Братских народов союз вековой,
+	Р‘СЂР°С‚СЃРєРёС… РЅР°СЂРѕРґРѕРІ СЃРѕСЋР· РІРµРєРѕРІРѕР№,
 	Bratskix narodov soyuz vekovoj,
 
-	Предками данная мудрость народная!
+	РџСЂРµРґРєР°РјРё РґР°РЅРЅР°СЏ РјСѓРґСЂРѕСЃС‚СЊ РЅР°СЂРѕРґРЅР°СЏ!
 	Predkami dannaya mudrost` narodnaya!
+	
 
-	Славься, страна! Мы гордимся тобой!
-	Slav`sya, strana! My` gordimsya toboj!
+## RoundXX.txt
 
-
-### RoundXX.txt
-
-File with only cirillic part of test case.
-Actually it can be any text file.
+It should be file with cyrillic text.
 
 Test strategy: 
 
-	var latin = Transliteration.LatinToCyrillyc(originalCyrillic, ...);
-	var cyrillic = Transliteration.CyrillycToLatin(latin, ...);
+	var latin = Transliteration.CyrillycToLatin(originalCyrillic, ...);
+	var cyrillic = Transliteration.LatinToCyrillyc(latin, ...);
 
 	Assert.Eqauls(originalCyrillic, cyrillic);

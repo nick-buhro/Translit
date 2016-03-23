@@ -92,7 +92,7 @@ namespace NickBuhro.Translit.Tests
 		{
 			get 
 			{
-				return base.Id + "At" + LineNumber.ToString("000");
+				return base.Id + "Ln" + LineNumber.ToString("000");
 			}
 		}
 	}
