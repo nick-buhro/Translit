@@ -14,26 +14,32 @@ namespace NickBuhro.Translit.Benchmark
 
             ExecuteTest(
                 "Cyrillic to Latin",
-                () => Transliteration.CyrillicToLatin(TestCase.Value, Language.Russian));
+                TestCase.Cyrillic.Length,
+                () => Transliteration.CyrillicToLatin(TestCase.Cyrillic, Language.Russian));
 
             ExecuteTest(
                 "Latin to Cyrillic",
-                () => Transliteration.LatinToCyrillyc(TestCase.Value, Language.Russian));
+                TestCase.Latin.Length,
+                () => Transliteration.LatinToCyrillyc(TestCase.Latin, Language.Russian));
 
             Console.WriteLine("Press any key...");
             Console.ReadKey();
         }
 
-        private static void ExecuteTest(string testName, Action testAction)
+        private static void ExecuteTest(string testName, int srcLength, Action testAction)
         {
             Console.WriteLine(testName);
+            Console.WriteLine();
+
+            Console.WriteLine("    Source length:{0,9:# ### ### ##0} chars", srcLength);
+            Console.WriteLine("                  {0,9:# ### ### ##0} B", srcLength << 1);
             Console.WriteLine();
 
             var t = new double[5];
             for (var i = 0; i < t.Length; i++)
             {
                 t[i] = ExecutionTimeTest.Execute(testAction);
-                Console.Write("    {0:0.00} ms", t[i]);
+                Console.Write("    {0,5:0.00} ms", t[i]);
             }
 
             Console.WriteLine();
