@@ -25,13 +25,13 @@ It could be specified concrete language from list:
 
 // Cyrillic to latin example
 
-var latin = Transliteration.CyrillicToLatin("Предками данная мудрость народная!", Language.Russian);
+var latin = Transliteration.CyrillicToLatin("РџСЂРµРґРєР°РјРё РґР°РЅРЅР°СЏ РјСѓРґСЂРѕСЃС‚СЊ РЅР°СЂРѕРґРЅР°СЏ!", Language.Russian);
 Console.WriteLine(latin);	// Output: Predkami dannaya mudrost` narodnaya!
 
 // Latin to cyrillic example
 
 var cyrillic = Transliteration.LatinToCyrillic("Predkami dannaya mudrost` narodnaya!", Language.Russian);
-Console.WriteLine(cyrillic);	// Output: Предками данная мудрость народная!
+Console.WriteLine(cyrillic);	// Output: РџСЂРµРґРєР°РјРё РґР°РЅРЅР°СЏ РјСѓРґСЂРѕСЃС‚СЊ РЅР°СЂРѕРґРЅР°СЏ!
 
 ```
 
