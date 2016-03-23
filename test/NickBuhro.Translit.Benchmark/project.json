@@ -11,7 +11,7 @@
   },
 
   "dependencies": {
-    "NickBuhro.Translit": "1.0.0-beta"
+    "NickBuhro.Translit": "1.0.0"
   },
 
   "commands": {
