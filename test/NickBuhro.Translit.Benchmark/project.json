@@ -1,0 +1,24 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "NickBuhro.Translit.Benchmark Console Application",
+  "authors": [ "nbuhr" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "NickBuhro.Translit": "1.0.0-beta"
+  },
+
+  "commands": {
+    "NickBuhro.Translit.Benchmark": "NickBuhro.Translit.Benchmark"
+  },
+
+  "frameworks": {
+    "dnx46": { }
+    }
+}

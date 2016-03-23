@@ -1,0 +1,25 @@
+﻿{
+  "version": "1.0.0",
+  "title": "Transliteration",
+  "description": "Library for cyrillic-latin transliteration.",
+  "summary": "Transliteration by GOST 7.79-2000 (ISO 9) System B (only for slavik languages).",
+  "authors": [ "Nicholas Buhro" ],
+  "tags": [ "translit", "transliteration", "cyrillic", "slavic", "iso-9" ],
+  "projectUrl": "https://github.com/nick-buhro/Translit",
+  "licenseUrl": "https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE",
+  "copyright": "Copyright (c) 2016 Nicholas Buhro",
+  "requireLicenseAcceptance": false,
+
+  "frameworks": {
+    "net35-client": { },
+    "net40-client": { },
+    "net45": { },
+    "dnx45": { },
+    "dotnet5.4": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516"
+      }
+    }
+  }
+}
