@@ -91,7 +91,6 @@ namespace NickBuhro.Translit.Implementation
 <# } #>
 			},
 <# } #>
-		
 		};
 	}
 }

@@ -4,32 +4,11 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
 <#@ output extension=".cs" #>
 <#
-	var path = this.Host.TemplateFile.Replace(".t4.tt", ".cases.ru.txt");
-	var text = File.ReadAllText(path);
-	var lines = text.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
-
-	var data = new List<string[]>(1 + lines.Length/3);	
-	var j = 0;
-	while (j < (lines.Length - 1))
-	{
-		if (string.IsNullOrEmpty(lines[j]) || string.IsNullOrEmpty(lines[j]))
-		{
-			j++;
-			continue;
-		}
-		data.Add(new [] {lines[j], lines[j+1]});
-		j += 2;
-	}
-
-	// Long string test
-	var lstCyrillic = string.Join(Environment.NewLine, data.Select(l => l[0]));
-	var lstLatin = string.Join(Environment.NewLine, data.Select(l => l[1]));
-
-	const int repeatCount = 100;
-	lstCyrillic = string.Concat(Enumerable.Repeat(lstCyrillic, repeatCount));
-	lstLatin = string.Concat(Enumerable.Repeat(lstLatin, repeatCount));
+	var fullTests = GetFullTests();
+	var roundTests = GetRoundTests();
 #>
 using Xunit;
 
@@ -46,62 +25,228 @@ namespace NickBuhro.Translit.Tests
 {
 	partial class TransliterationTests
 	{
-		#region Test cases
-
-		private static readonly string[][] TestCases =
-	    {
-<# for (var i = 0; i < data.Count; i++) { #>
-			new [] // <#=i.ToString("00")#>
-			{
-			    @"<#=data[i][0]#>",
-                @"<#=data[i][1]#>"
-			},
-<# } #>
-		};
-
-		#endregion
-
-		#region Long string test case
-
-		private static readonly string[] LongStringTestCase = 
-		{
-@"<#=lstCyrillic#>",
-
-@"<#=lstLatin#>"
-		};
-
-		#endregion
-
-		#region Test methods
-
-<# for (var i = 0; i < data.Count; i++) { #>
+<# foreach (var tc in fullTests) { #>
 		[Fact]
-		public void RussianToLatin<#=i.ToString("00")#>Test()
+		public void Forward<#=tc.Id#>()
 		{
-			var testCase = TestCases[<#=i#>];
-			RussianToLatinTestHelper(testCase[0], testCase[1]);
+			// <#=tc.FileName#>
+			// Ln <#=string.Format("{0,3}", tc.LineNumber)#>
+			CyrillycToLatinTest(
+				Language.<#=tc.Language#>,
+				@"<#=tc.Cyrillic#>", 
+				@"<#=tc.Latin#>");
 		}
 
 		[Fact]
-		public void LatinToRussian<#=i.ToString("00")#>Test()
+		public void Backward<#=tc.Id#>()
 		{
-			var testCase = TestCases[<#=i#>];
-			LatinToRussianTestHelper(testCase[1], testCase[0]);
+			// <#=tc.FileName#>
+			// Ln <#=string.Format("{0,3}", tc.LineNumber)#>
+			LatinToCyrillicTest(
+				Language.<#=tc.Language#>,
+				@"<#=tc.Latin#>",
+				@"<#=tc.Cyrillic#>");
 		}
 
 <# } #>
+<# foreach (var tc in roundTests) { #>
 		[Fact]
-		public void RussianToLatinLongStringTest()
-		{		
-			RussianToLatinTestHelper(LongStringTestCase[0], LongStringTestCase[1]);
-		}
-
-		[Fact]
-		public void LatinToRussianLongStringTest()
+		public void <#=tc.Id#>()
 		{
-			LatinToRussianTestHelper(LongStringTestCase[1], LongStringTestCase[0]);
+			// <#=tc.FileName#>			
+			RoundTest(
+				Language.<#=tc.Language#>,				
+				@"<#=tc.Cyrillic#>");
 		}
 
-		#endregion
+<# } #>	
 	}
 }
+
+
+<#+
+	private class RoundTestCase
+	{
+		public string Cyrillic;		
+		public string Language;
+		public string FileName;
+
+		public virtual string Id
+		{
+			get 
+			{
+				var fName = FileName.Substring(0, FileName.Length - 4);
+				if (fName.Contains(Path.DirectorySeparatorChar.ToString()))
+					return fName.Replace(Path.DirectorySeparatorChar.ToString(), "");
+				return fName + Language;
+			}
+		}
+	}
+	
+	private class FullTestCase: RoundTestCase
+	{
+		public string Latin;
+		public int LineNumber;
+
+		public override string Id
+		{
+			get 
+			{
+				return base.Id + "At" + LineNumber.ToString("000");
+			}
+		}
+	}
+	
+	private static readonly string[] Languages = new []
+	{
+		"Unknown",
+        "Russian",
+        "Belorussian",
+        "Ukrainian",
+        "Bulgarian",
+        "Macedonian"
+	};
+	
+	private string GetLanguage(string filePath)
+	{
+		var fileName = Path.GetFileName(filePath);
+		var match = Regex.Match(
+			filePath,
+            @".*?\\TestCase(\\\w+)?\\" + fileName, 
+            RegexOptions.Singleline);
+
+		if (!match.Success)
+			throw new ArgumentException();
+		
+		if (match.Groups.Count > 1)
+		{
+			return match.Groups[1].Value.Substring(1);
+		}
+		return null;
+	}	
+
+	private IEnumerable<FullTestCase> ParseFullFile(string filePath)
+	{	
+		var lang = GetLanguage(filePath);
+		var fileName = Path.GetFileName(filePath);
+		if (lang != null)
+		{
+			fileName = Path.Combine(lang, fileName);
+		}
+
+		var txt = File.ReadAllText(filePath);
+		var lines = txt.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+				
+		var i = 0;
+		while (i < (lines.Length - 1))
+		{
+			if (string.IsNullOrEmpty(lines[i]) || string.IsNullOrEmpty(lines[i]))
+			{
+				i++;
+				continue;
+			}
+
+			var cyr = lines[i].Replace("@", "");
+			var lat = lines[i+1].Replace("@", "");
+
+			if (lang != null)
+			{
+				var tc = new FullTestCase();
+				tc.Cyrillic = cyr;
+				tc.Latin = lat;
+				tc.Language = lang;
+				tc.FileName = fileName;
+				tc.LineNumber = i+1; 
+				yield return tc;
+			}
+			else
+			{
+				foreach (var l in Languages)
+				{
+					var tc = new FullTestCase();
+					tc.Cyrillic = cyr;
+					tc.Latin = lat;
+					tc.Language = l;
+					tc.FileName = fileName;
+					tc.LineNumber = i+1; 
+					yield return tc;
+				}
+			}
+
+			i += 2;
+		}
+	}
+	
+	private IEnumerable<RoundTestCase> ParseRoundFile(string filePath)
+	{	
+		var lang = GetLanguage(filePath);
+		var fileName = Path.GetFileName(filePath);
+		if (lang != null)
+		{
+			fileName = Path.Combine(lang, fileName);
+		}
+
+		var txt = File.ReadAllText(filePath);			
+		txt = Regex.Replace(
+			txt.Replace("@", "").Trim(),
+			"[\r\n\t ]{2,}", 
+			Environment.NewLine);
+
+		if (lang != null)
+		{
+			var tc = new RoundTestCase();
+			tc.Cyrillic = txt;
+			tc.Language = lang;
+			tc.FileName = fileName;
+			yield return tc;
+		}
+		else
+		{
+			foreach (var l in Languages)
+			{
+				var tc = new RoundTestCase();
+				tc.Cyrillic = txt;
+				tc.Language = l;
+				tc.FileName = fileName;
+				yield return tc;
+			}
+		}
+	}
+
+	private IEnumerable<FullTestCase> GetFullTests()
+	{
+		var dir = Path.GetDirectoryName(this.Host.TemplateFile);
+		dir = Path.Combine(dir, "TestCase");
+		var files = Directory.GetFiles(
+                dir,
+                "Full*.txt",
+                SearchOption.AllDirectories);
+
+		foreach (var f in files)
+		{
+			foreach (var tc in ParseFullFile(f))
+			{
+				yield return tc;
+			}
+		}
+	}
+
+	private IEnumerable<RoundTestCase> GetRoundTests()
+	{
+		var dir = Path.GetDirectoryName(this.Host.TemplateFile);
+		dir = Path.Combine(dir, "TestCase");
+		var files = Directory.GetFiles(
+                dir,
+                "Round*.txt",
+                SearchOption.AllDirectories);
+
+		foreach (var f in files)
+		{
+			foreach (var tc in ParseRoundFile(f))
+			{
+				yield return tc;
+			}
+		}
+	}
+
+#>
