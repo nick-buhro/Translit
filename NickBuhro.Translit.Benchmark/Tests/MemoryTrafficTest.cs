@@ -1,19 +1,18 @@
 ﻿using System;
+using System.Runtime;
 
 namespace NickBuhro.Translit.Benchmark
 {
     public static class MemoryTrafficTest
     {
-        private const long _512MB = 1 << 29;
-
-        public static long Execute(Action testAction, long memoryLimit = _512MB)
+        public static long Execute(Action testAction)
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
-            if (!GC.TryStartNoGCRegion(memoryLimit))
-                throw new InsufficientMemoryException();
+            var latencyMode = GCSettings.LatencyMode;
+            GCSettings.LatencyMode = GCLatencyMode.LowLatency;
 
             try
             {
@@ -24,8 +23,8 @@ namespace NickBuhro.Translit.Benchmark
                 return GC.GetTotalMemory(false) - memBefore;
             }
             finally
-            {           
-                GC.EndNoGCRegion();
+            {
+                GCSettings.LatencyMode = latencyMode;
             }
         }
     }
