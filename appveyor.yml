@@ -1,0 +1,61 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+version: 1.1.{build}-beta
+
+branches:
+  only:
+    - feature/appveyor
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+image: Visual Studio 2017
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+platform: Any CPU
+configuration: Release
+
+build:
+  project: NickBuhro.Translit.sln
+
+before_build:
+  - nuget restore  
+  - ps: |
+        $xmlPath = "$env:appveyor_build_folder\NickBuhro.Translit\NickBuhro.Translit.csproj"
+        $xml = [xml](get-content $xmlPath)
+        $propertyGroup = $xml.Project.PropertyGroup[0]
+        $propertyGroup.Version = $env:appveyor_build_version
+        $xml.Save($xmlPath)
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+        
+artifacts:
+
+  - path: NickBuhro.Translit\bin\$(configuration)    
+    type: zip
+
+  - path: NickBuhro.Translit\bin\$(configuration)\*.nupkg    
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: vDxpqHHdBtz+P6Nau7V8tLYhtc+5tE6qfEoQI8Vrse11k0vWCrAKY1vUvMoLFURB
+  skip_symbols: false
+  artifact: /.*\.nupkg/
