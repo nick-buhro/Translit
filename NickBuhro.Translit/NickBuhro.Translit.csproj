@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         
     <Title>Transliteration</Title>    
-    <Version>1.1.0</Version>
+    <Version>1.1.0-beta</Version>
     <Authors>Nicholas Buhro</Authors>    
     <PackageTags>translit transliteration cyrillic slavic iso-9</PackageTags>
     <PackageLicenseUrl>https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE</PackageLicenseUrl>
