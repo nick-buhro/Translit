@@ -60,24 +60,41 @@ namespace NickBuhro.Translit.Implementation
 
             return _sb.ToString();
         }
-
-
-        private static readonly HashSet<char> RuleCzCheck = new HashSet<char>
-        {
-            'Е', 'Ё', 'И', 'Й', 'I', 'Ы', 'Э', 'Ю', 'Я', 'е', 'ё', 'и', 'й', 'i', 'ы', 'э', 'ю', 'я',
-            'ѣ', 'Ѣ', 'ѵ', 'Ѵ'
-        };
+                
         private string CheckSpecificRules(string substitue, char nextSourceChar)
         {
-            if (substitue.Length == 2)
+            // Ц	cz, c	cz, c	cz, c	cz, c	cz, c	рекомендуется использовать С перед буквами I, Е, Y, J; в остальных случаях CZ
+            if ((substitue.Length != 2) || (substitue[1] != 'z'))
+                return substitue;            
+            
+            switch (nextSourceChar)
             {
-                // Ц	cz, c	cz, c	cz, c	cz, c	cz, c	рекомендуется использовать С перед буквами I, Е, Y, J; в остальных случаях CZ
-                if ((substitue[1] == 'z') && (RuleCzCheck.Contains(nextSourceChar)))
-                {
-                    return substitue.Substring(0, 1);
-                }
-            }
-            return substitue;
+                case 'Е':
+                case 'Ё':
+                case 'И':
+                case 'Й':
+                case 'I':
+                case 'Ы':
+                case 'Э':
+                case 'Ю':
+                case 'Я':
+                case 'е':
+                case 'ё':
+                case 'и':
+                case 'й':
+                case 'i':
+                case 'ы':
+                case 'э':
+                case 'ю':
+                case 'я':
+                case 'ѣ':
+                case 'Ѣ':
+                case 'ѵ':
+                case 'Ѵ':
+                    return substitue.Substring(0, 1);                    
+                default:
+                    return substitue;                    
+            }            
         }
     }
 }
