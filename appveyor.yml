@@ -9,3 +9,7 @@ configuration: Debug
 
 before_build:
   - nuget restore
+
+artifacts:
+  - path: bin\$(configuration)\*.nupkg
+    name: Package
