@@ -2,10 +2,9 @@
 
 C# library for cyrillic-latin transliteration.
 
-The current version of the library is also [available on NuGet](https://www.nuget.org/packages/NickBuhro.Translit).
-
 ![License](https://img.shields.io/badge/license-MIT-red.svg)
 [![Build status](https://ci.appveyor.com/api/projects/status/5xxmbn82hu9762n7?svg=true)](https://ci.appveyor.com/project/nick-buhro/translit)
+[![NuGet Badge](https://buildstats.info/nuget/NickBuhro.Translit)](https://www.nuget.org/packages/NickBuhro.Translit/)
 
 ## Features
 
