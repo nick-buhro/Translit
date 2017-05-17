@@ -44,13 +44,18 @@ before_build:
         
 artifacts:
 
-  - path: NickBuhro.Translit\bin\$(configuration)
-    name: NickBuhro.Translit-{version}
+  - path: NickBuhro.Translit\bin\$(configuration)    
     type: zip
 
-  - path: NickBuhro.Translit\bin\$(configuration)\*.nupkg
-    name: Package
+  - path: NickBuhro.Translit\bin\$(configuration)\*.nupkg    
 
 #---------------------------------#
 #     deployment configuration    #
 #---------------------------------#
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: vDxpqHHdBtz+P6Nau7V8tLYhtc+5tE6qfEoQI8Vrse11k0vWCrAKY1vUvMoLFURB
+  skip_symbols: false
+  artifact: /.*\.nupkg/
