@@ -29,7 +29,7 @@ before_build:
   - ps: |
         $xmlPath = "$env:appveyor_build_folder\NickBuhro.Translit\NickBuhro.Translit.csproj"
         $xml = [xml](get-content $xmlPath)
-        $propertyGroup = $xml.Project.PropertyGroup
+        $propertyGroup = $xml.Project.PropertyGroup[0]
         $propertyGroup.Version = $env:appveyor_build_version
         $xml.Save($xmlPath)
 
