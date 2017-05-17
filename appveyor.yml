@@ -1,12 +1,28 @@
-image: Visual Studio 2017
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+version: 1.1.{build}-beta
 
 branches:
-  only: feature/appveyor
+  only:
+    - feature/appveyor
 
-configuration:
-  - Release
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
 
-version: '1.1.{build}-beta'
+image: Visual Studio 2017
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+platform: Any CPU
+configuration: Release
+
+build:
+  project: NickBuhro.Translit.sln
 
 before_build:
   - nuget restore  
@@ -16,10 +32,25 @@ before_build:
         $propertyGroup = $xml.Project.PropertyGroup
         $propertyGroup.Version = $env:appveyor_build_version
         $xml.Save($xmlPath)
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
         
 artifacts:
+
   - path: NickBuhro.Translit\bin\$(configuration)
     name: NickBuhro.Translit-{version}
     type: zip
+
   - path: NickBuhro.Translit\bin\$(configuration)\*.nupkg
     name: Package
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
