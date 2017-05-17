@@ -11,5 +11,5 @@ before_build:
   - nuget restore
 
 artifacts:
-  - path: bin\$(configuration)\*.nupkg
+  - path: NickBuhro.Translit\bin\$(configuration)\*.nupkg
     name: Package
