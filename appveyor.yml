@@ -1,24 +1,12 @@
 image: Visual Studio 2017
 
--
-  branches:
-    only:
-      - master
-  configuration: Release
-  environment:
-    versuffix: ''
+branches:
+  only: feature/appveyor
 
-- 
-  branches:
-    only:
-      - develop
-      - feature/appveyor
-  configuration: Debug
-  environment:
-    versuffix: '-beta'
-    
+configuration:
+  - Release
 
-version: '1.1.{build}$(versuffix)'
+version: '1.1.{build}-beta'
 
 before_build:
   - nuget restore  
@@ -30,5 +18,8 @@ before_build:
         $xml.Save($xmlPath)
         
 artifacts:
+  - path: NickBuhro.Translit\bin\$(configuration)
+    name: NickBuhro.Translit-{version}
+    type: zip
   - path: NickBuhro.Translit\bin\$(configuration)\*.nupkg
     name: Package
