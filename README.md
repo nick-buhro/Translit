@@ -2,7 +2,7 @@
 
 C# library for cyrillic-latin transliteration.
 
-![License](https://img.shields.io/badge/license-MIT-red.svg)
+[![License](https://img.shields.io/badge/license-MIT-red.svg)](https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE)
 [![Build status](https://ci.appveyor.com/api/projects/status/5xxmbn82hu9762n7?svg=true)](https://ci.appveyor.com/project/nick-buhro/translit)
 [![NuGet Badge](https://buildstats.info/nuget/NickBuhro.Translit)](https://www.nuget.org/packages/NickBuhro.Translit/)
 
@@ -14,8 +14,8 @@ It implements transliteration by
 on System B (only for slavik languages).
 
 Both direction transliteration is supported:
-* cyrillyc to latin
-* latin to cyrillyc
+* cyrillic to latin
+* latin to cyrillic
 
 It could be specified concrete language from list:
 * Russian
@@ -35,7 +35,7 @@ Console.WriteLine(latin);	// Output: Predkami dannaya mudrost` narodnaya!
 
 // Latin to cyrillic example
 
-var cyrillic = Transliteration.LatinToCyrillic("Predkami dannaya mudrost` narodnaya!", Language.Russian);
+var cyrillic = Transliteration.LatinToCyrillyc("Predkami dannaya mudrost` narodnaya!", Language.Russian);
 Console.WriteLine(cyrillic);	// Output: Предками данная мудрость народная!
 
 ```
@@ -45,7 +45,8 @@ Console.WriteLine(cyrillic);	// Output: Предками данная мудро
 The library uses no references except for `System` - it has no external dependencies.
 It is cross compiled to:
 
-* .NET Framework 3.5 Client Profile
-* .NET Framework 4.0 Client Profile
+* .NET Framework 2.0
+* .NET Framework 3.5
+* .NET Framework 4.0
 * .NET Framework 4.5
-* .NET Platform 5.4
+* .NET Standard 1.3
