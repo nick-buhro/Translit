@@ -10,6 +10,10 @@ branches:
     - develop
     - feature/coveralls
 
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: GZLA0EL0qjA//e/pc8VZ8cc6zOPMBImlJpXc33Fr4G2LgvtmqTEYn3lKMh5ZKE7N
+
 #---------------------------------#
 #    environment configuration    #
 #---------------------------------#
