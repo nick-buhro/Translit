@@ -42,6 +42,8 @@ before_build:
 #       tests configuration       #
 #---------------------------------#
 
+after_test:
+  - coverage-script.bat
 
 #---------------------------------#
 #      artifacts configuration    #
