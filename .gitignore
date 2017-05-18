@@ -21,8 +21,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 
-Coverage/
 results.xml
+summary.mht
 
 # Visual Studio 2015 cache/options directory
 .vs/

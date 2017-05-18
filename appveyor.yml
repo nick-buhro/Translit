@@ -44,6 +44,7 @@ before_build:
 
 after_test:
   - if "%CONFIGURATION%"=="Debug" (coverage-script.bat)
+  - if "%CONFIGURATION%"=="Debug" (appveyor PushArtifact summary.mht)
 
 #---------------------------------#
 #      artifacts configuration    #
@@ -55,8 +56,6 @@ artifacts:
     type: zip
 
   - path: NickBuhro.Translit\bin\$(configuration)\*.nupkg
-  
-  - path: Coverage
 
 #---------------------------------#
 #     deployment configuration    #
