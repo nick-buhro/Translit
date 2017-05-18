@@ -3,8 +3,8 @@
 C# library for cyrillic-latin transliteration.
 
 [![License](https://img.shields.io/badge/license-MIT-red.svg)](https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE)
-[![Build status](https://ci.appveyor.com/api/projects/status/5xxmbn82hu9762n7?svg=true)](https://ci.appveyor.com/project/nick-buhro/translit)
 [![NuGet Badge](https://buildstats.info/nuget/NickBuhro.Translit)](https://www.nuget.org/packages/NickBuhro.Translit/)
+[![Build status](https://ci.appveyor.com/api/projects/status/5xxmbn82hu9762n7?svg=true)](https://ci.appveyor.com/project/nick-buhro/translit)
 [![Coverage Status](https://coveralls.io/repos/github/nick-buhro/Translit/badge.svg?branch=feature%2Fcoveralls)](https://coveralls.io/github/nick-buhro/Translit?branch=feature%2Fcoveralls)
 
 ## Features

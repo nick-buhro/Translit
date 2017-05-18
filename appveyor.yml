@@ -7,8 +7,7 @@ version: 1.1.{build}
 branches:
   only:
     - master
-    - develop
-    - feature/coveralls
+    - develop    
 
 environment:
   COVERALLS_REPO_TOKEN:
@@ -47,7 +46,7 @@ before_build:
 #---------------------------------#
 
 after_test:
-  - if "%CONFIGURATION%"=="Debug" (coverage-script.bat)
+  - if "%CONFIGURATION%"=="Debug" (coverage.bat)
   - if "%CONFIGURATION%"=="Debug" (appveyor PushArtifact summary.mht)
 
 #---------------------------------#
