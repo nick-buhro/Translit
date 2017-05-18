@@ -43,7 +43,7 @@ before_build:
 #---------------------------------#
 
 after_test:
-  - coverage-script.bat
+  - if CONFIGURATION=="Debug" (coverage-script.bat)
 
 #---------------------------------#
 #      artifacts configuration    #
