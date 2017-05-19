@@ -31,7 +31,7 @@ namespace NickBuhro.Translit.Tests
 		{
 			// <#=tc.FileName#>
 			// Ln <#=string.Format("{0,3}", tc.LineNumber)#>
-			CyrillycToLatinTest(
+			CyrillicToLatinTest(
 				Language.<#=tc.Language#>,
 				@"<#=tc.Cyrillic#>", 
 				@"<#=tc.Latin#>");

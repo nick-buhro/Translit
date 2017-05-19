@@ -36,7 +36,7 @@ Console.WriteLine(latin);	// Output: Predkami dannaya mudrost` narodnaya!
 
 // Latin to cyrillic example
 
-var cyrillic = Transliteration.LatinToCyrillyc("Predkami dannaya mudrost` narodnaya!", Language.Russian);
+var cyrillic = Transliteration.LatinToCyrillic("Predkami dannaya mudrost` narodnaya!", Language.Russian);
 Console.WriteLine(cyrillic);	// Output: Предками данная мудрость народная!
 
 ```

@@ -20,7 +20,7 @@ namespace NickBuhro.Translit.Benchmark
             ExecuteTest(
                 "Latin to Cyrillic",
                 TestCase.Latin.Length,
-                () => Transliteration.LatinToCyrillyc(TestCase.Latin, Language.Russian));
+                () => Transliteration.LatinToCyrillic(TestCase.Latin, Language.Russian));
 
             Console.WriteLine("Press any key...");
             Console.ReadKey();

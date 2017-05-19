@@ -4,7 +4,7 @@ namespace NickBuhro.Translit.Tests
 {
     public sealed partial class TransliterationTests
     {
-        private static void CyrillycToLatinTest(
+        private static void CyrillicToLatinTest(
             Language lang,
             string source, 
             string expectedResult)
@@ -18,7 +18,7 @@ namespace NickBuhro.Translit.Tests
             string source,
             string expectedResult)
         {
-            var actual = Transliteration.LatinToCyrillyc(source, lang);
+            var actual = Transliteration.LatinToCyrillic(source, lang);
             Assert.Equal(expectedResult, actual);
         }
 
@@ -27,7 +27,7 @@ namespace NickBuhro.Translit.Tests
             string source)
         {
             var latin = Transliteration.CyrillicToLatin(source, lang);
-            var actual = Transliteration.LatinToCyrillyc(latin, lang);
+            var actual = Transliteration.LatinToCyrillic(latin, lang);
             Assert.Equal(source, actual);
         }
     }

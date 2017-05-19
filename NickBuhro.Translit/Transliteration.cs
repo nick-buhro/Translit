@@ -9,7 +9,7 @@ namespace NickBuhro.Translit
     public static class Transliteration
     {
         /// <summary>
-        /// Transliterate cyrillyc string to latin.
+        /// Transliterate cyrillic string to latin.
         /// </summary>
         /// <param name="cyrillicSource">Source string.</param>
         /// <param name="language">Specify it to determine correct transliteration rules 
@@ -22,16 +22,30 @@ namespace NickBuhro.Translit
         }
 
         /// <summary>
-        /// Transliterate latin string to cyrillyc.
+        /// Transliterate latin string to cyrillic.
         /// </summary>
         /// <param name="latinSource">Source string.</param>
         /// <param name="language">Specify it to determine correct transliteration rules 
         /// (it can be a little bit defferent for languages).</param>
-        /// <returns>Cyrillyc string.</returns>
-        public static string LatinToCyrillyc(string latinSource, Language language = Language.Unknown)
+        /// <returns>Cyrillic string.</returns>
+        public static string LatinToCyrillic(string latinSource, Language language = Language.Unknown)
         {
             return new LatinToCyrillicConverter(latinSource, language)
                 .Convert();
+        }
+
+        /// <summary>        
+        /// The method is deprecated due to an error in the name.
+        /// Use <see cref="LatinToCyrillic(string, Language)"/>.
+        /// </summary>
+        /// <param name="latinSource">Source string.</param>
+        /// <param name="language">Specify it to determine correct transliteration rules 
+        /// (it can be a little bit defferent for languages).</param>
+        /// <returns>Cyrillic string.</returns>
+        [Obsolete("The method is deprecated due to an error in the name.")]
+        public static string LatinToCyrillyc(string latinSource, Language language = Language.Unknown)
+        {
+            return LatinToCyrillic(latinSource, language);
         }
     }
 }
