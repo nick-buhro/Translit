@@ -17,16 +17,13 @@
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.console" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NickBuhro.Translit\NickBuhro.Translit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TransliterationTests.t4.tt">
+    <None Update="TransliterationTests.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TransliterationTests.t4.cs</LastGenOutput>
+      <LastGenOutput>TransliterationTests.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -36,15 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="TransliterationTests.t4.cs">
+    <Compile Update="TransliterationTests.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>TransliterationTests.t4.tt</DependentUpon>
+      <DependentUpon>TransliterationTests.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Issues\" />
   </ItemGroup>
 
 </Project>

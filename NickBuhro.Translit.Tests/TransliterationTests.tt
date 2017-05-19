@@ -5,7 +5,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ output extension=".cs" #>
+<#@ output extension=".generated.cs" #>
 <#
 	var fullTests = GetFullTests();
 	var roundTests = GetRoundTests();
@@ -112,7 +112,7 @@ namespace NickBuhro.Translit.Tests
 		var fileName = Path.GetFileName(filePath);
 		var match = Regex.Match(
 			filePath,
-            @".*?\\TestCase(\\\w+)?\\" + fileName, 
+            @".*?\\Assets(\\\w+)?\\" + fileName, 
             RegexOptions.Singleline);
 
 		if (!match.Success)
@@ -216,7 +216,7 @@ namespace NickBuhro.Translit.Tests
 	private IEnumerable<FullTestCase> GetFullTests()
 	{
 		var dir = Path.GetDirectoryName(this.Host.TemplateFile);
-		dir = Path.Combine(dir, "TestCase");
+		dir = Path.Combine(dir, "Assets");
 		var files = Directory.GetFiles(
                 dir,
                 "Full*.txt",
@@ -234,7 +234,7 @@ namespace NickBuhro.Translit.Tests
 	private IEnumerable<RoundTestCase> GetRoundTests()
 	{
 		var dir = Path.GetDirectoryName(this.Host.TemplateFile);
-		dir = Path.Combine(dir, "TestCase");
+		dir = Path.Combine(dir, "Assets");
 		var files = Directory.GetFiles(
                 dir,
                 "Round*.txt",
