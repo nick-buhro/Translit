@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestCase\Definition.t4.tt">
+    <None Update="Assets\Definition.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Definition.t4.cs</LastGenOutput>
+      <LastGenOutput>Definition.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -21,10 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="TestCase\Definition.t4.cs">
+    <Compile Update="Assets\Definition.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Definition.t4.tt</DependentUpon>
+      <DependentUpon>Definition.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

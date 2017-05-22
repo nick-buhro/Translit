@@ -46,7 +46,7 @@ It should be file with cyrillic text.
 
 Test strategy: 
 
-	var latin = Transliteration.CyrillycToLatin(originalCyrillic, ...);
-	var cyrillic = Transliteration.LatinToCyrillyc(latin, ...);
+	var latin = Transliteration.CyrillicToLatin(originalCyrillic, ...);
+	var cyrillic = Transliteration.LatinToCyrillic(latin, ...);
 
 	Assert.Eqauls(originalCyrillic, cyrillic);

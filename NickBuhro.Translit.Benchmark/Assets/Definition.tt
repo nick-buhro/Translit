@@ -5,9 +5,9 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ output extension=".cs" #>
+<#@ output extension=".generated.cs" #>
 <#
-	var filePath = this.Host.TemplateFile.Replace(".t4.tt", ".txt");
+	var filePath = this.Host.TemplateFile.Replace(".tt", ".txt");
 	var txt = File.ReadAllText(filePath);
 	txt = Regex.Replace(
 			txt.Replace("@", "").Trim(),
