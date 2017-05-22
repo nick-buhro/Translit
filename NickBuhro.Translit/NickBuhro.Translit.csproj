@@ -29,13 +29,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Implementation\CyrillycToLatinConverter.t4.tt">
+    <None Update="Implementation\CyrillycToLatinConverter.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CyrillycToLatinConverter.t4.cs</LastGenOutput>
+      <LastGenOutput>CyrillycToLatinConverter.generated.cs</LastGenOutput>
     </None>
-    <None Update="Implementation\LatinToCyrillicConverter.t4.tt">
+    <None Update="Implementation\LatinToCyrillicConverter.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LatinToCyrillicConverter.t4.cs</LastGenOutput>
+      <LastGenOutput>LatinToCyrillicConverter.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -44,15 +44,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Implementation\CyrillycToLatinConverter.t4.cs">
+    <Compile Update="Implementation\CyrillycToLatinConverter.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>CyrillycToLatinConverter.t4.tt</DependentUpon>
+      <DependentUpon>CyrillycToLatinConverter.tt</DependentUpon>
     </Compile>
-    <Compile Update="Implementation\LatinToCyrillicConverter.t4.cs">
+    <Compile Update="Implementation\LatinToCyrillicConverter.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>LatinToCyrillicConverter.t4.tt</DependentUpon>
+      <DependentUpon>LatinToCyrillicConverter.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
