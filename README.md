@@ -46,8 +46,5 @@ Console.WriteLine(cyrillic);	// Output: Предками данная мудро
 The library uses no references except for `System` - it has no external dependencies.
 It is cross compiled to:
 
-* .NET Framework 2.0
-* .NET Framework 3.5
-* .NET Framework 4.0
-* .NET Framework 4.5
+* .NET Framework 2.0 and above
 * .NET Standard 1.3
