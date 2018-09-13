@@ -10,6 +10,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Russian\Full01.txt" />
+    <None Remove="Assets\Russian\Full02.txt" />
+    <None Remove="Assets\Russian\Full03.txt" />
+    <None Remove="Assets\Russian\Round01.txt" />
+    <None Remove="Assets\Russian\Round02.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Russian\Full01.txt" />
+    <EmbeddedResource Include="Assets\Russian\Full02.txt" />
+    <EmbeddedResource Include="Assets\Russian\Full03.txt" />
+    <EmbeddedResource Include="Assets\Russian\Round01.txt" />
+    <EmbeddedResource Include="Assets\Russian\Round02.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coveralls.io" Version="1.3.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
