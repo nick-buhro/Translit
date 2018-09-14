@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace NickBuhro.Translit.Implementation
+namespace NickBuhro.Translit.v1
 {
     internal partial struct LatinToCyrillicConverter
     {

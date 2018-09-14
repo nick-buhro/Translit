@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace NickBuhro.Translit.Implementation
+namespace NickBuhro.Translit.v1
 {
     internal partial struct CyrillicToLatinConverter
     {
