@@ -10,7 +10,7 @@ namespace NickBuhro.Translit
     /// <summary>
     ///  Cyrillic-latin transliteration (support only slavik languages) by GOST 7.79-2000 (ISO 9).
     /// </summary>
-    public static class Transliteration
+    public static partial class Transliteration
     {
         /// <summary>
         /// Transliterate cyrillic string to latin.

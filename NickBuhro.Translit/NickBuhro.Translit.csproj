@@ -29,6 +29,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="TransliterationT4.tt">
+      <LastGenOutput>TransliterationT4.generated.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="v1\CyrillycToLatinConverter.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CyrillycToLatinConverter.generated.cs</LastGenOutput>
@@ -44,6 +48,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="TransliterationT4.generated.cs">
+      <DependentUpon>TransliterationT4.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="v1\CyrillycToLatinConverter.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
