@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 [assembly: InternalsVisibleTo("NickBuhro.Translit.Benchmark")]
 
@@ -45,9 +46,8 @@ namespace NickBuhro.Translit.Sandbox.v2
 
         internal static string Convert(string text, TransitionCollection[] fsm, int capacity)
         {
-            var index = 0;
-            var arr = new char[capacity];    
-            
+            var sb = new StringBuilder(capacity);
+
             var state = 0;
             for (var i = 0; i < text.Length; i++)
             {
@@ -56,31 +56,22 @@ namespace NickBuhro.Translit.Sandbox.v2
                 if (tc.TryGetValue(c, out Output output))
                 {
                     state = output.State;
-                    for (var j = 0; j < output.Text.Length; j++)
-                    {
-                        arr[index++] = output.Text[j];
-                    }
+                    sb.Append(output.Text);
                 }
                 else
                 {
                     state = 0;
-                    for (var j = 0; j < tc.DefaultOutputText.Length; j++)
-                    {
-                        arr[index++] = tc.DefaultOutputText[j];
-                    }
-                    arr[index++] = c;
+                    sb.Append(tc.DefaultOutputText);
+                    sb.Append(c);
                 }
             }
 
             {
                 var tc = fsm[state];
-                for (var j = 0; j < tc.DefaultOutputText.Length; j++)
-                {
-                    arr[index++] = tc.DefaultOutputText[j];
-                }
+                sb.Append(tc.DefaultOutputText);
             }
 
-            return new string(arr, 0, index);
+            return sb.ToString();
         }
 
         internal static TransitionCollection[] BuildFSM(Dictionary<string, string> replacements)

@@ -25,8 +25,7 @@ namespace NickBuhro.Translit.Benchmark
             else if (Asset == "Small")
             {
                 _cyrillic = Assets.SmallCyrillic;
-                _latin = //Assets.SmallLatin;
-                    FSMTranslit.CyrillicToLatin(_cyrillic, Language.Russian);
+                _latin = Assets.SmallLatin;
             }
             else
             {
