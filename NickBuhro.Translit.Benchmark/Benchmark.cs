@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using NickBuhro.Translit.v1;
 using System;
+using System.Text;
 
 namespace NickBuhro.Translit.Benchmark
 {
@@ -30,13 +31,18 @@ namespace NickBuhro.Translit.Benchmark
             {
                 throw new NotSupportedException();
             }
-        }       
+        }
 
+        [Benchmark]
+        public string C2L() => Transliteration.CyrillicToLatin(_cyrillic, Language.Russian);
+
+        [Benchmark]
+        public string L2C() => Transliteration.LatinToCyrillic(_latin, Language.Russian);
 
         [Benchmark]
         public string C2Lv1() => new CyrillicToLatinConverter(_cyrillic, Language.Russian).Convert();
     
         [Benchmark]
-        public string L2Cv1() => new LatinToCyrillicConverter(_cyrillic, Language.Russian).Convert();
+        public string L2Cv1() => new LatinToCyrillicConverter(_latin, Language.Russian).Convert();        
     }
 }

@@ -21,8 +21,25 @@ namespace NickBuhro.Translit
         /// <returns>Transliterated string.</returns>
         public static string CyrillicToLatin(string cyrillicSource, Language language = Language.Unknown)
         {
-            return new CyrillicToLatinConverter(cyrillicSource, language)
-                .Convert();
+            switch (language)
+            {
+                case Language.Unknown:
+                case Language.Russian:
+                    return Cyrillic2LatinRussian(cyrillicSource);
+                case Language.Belorussian:
+                    return Cyrillic2LatinBelorussian(cyrillicSource);
+                case Language.Ukrainian:
+                    return Cyrillic2LatinUkrainian(cyrillicSource);
+                case Language.Bulgarian:
+                    return Cyrillic2LatinBulgarian(cyrillicSource);
+                case Language.Macedonian:
+                    return Cyrillic2LatinMacedonian(cyrillicSource);
+                default:
+                    throw new NotSupportedException();
+            }
+
+            //return new CyrillicToLatinConverter(cyrillicSource, language)
+            //    .Convert();
         }
 
         /// <summary>
@@ -34,8 +51,25 @@ namespace NickBuhro.Translit
         /// <returns>Cyrillic string.</returns>
         public static string LatinToCyrillic(string latinSource, Language language = Language.Unknown)
         {
-            return new LatinToCyrillicConverter(latinSource, language)
-                .Convert();
+            switch (language)
+            {
+                case Language.Unknown:
+                case Language.Russian:
+                    return Latin2CyrillicRussian(latinSource);
+                case Language.Belorussian:
+                    return Latin2CyrillicBelorussian(latinSource);
+                case Language.Ukrainian:
+                    return Latin2CyrillicUkrainian(latinSource);
+                case Language.Bulgarian:
+                    return Latin2CyrillicBulgarian(latinSource);
+                case Language.Macedonian:
+                    return Latin2CyrillicMacedonian(latinSource);
+                default:
+                    throw new NotSupportedException();
+            }
+
+            //return new LatinToCyrillicConverter(latinSource, language)
+            //    .Convert();
         }
 
         /// <summary>        

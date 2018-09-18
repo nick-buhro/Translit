@@ -27,7 +27,7 @@
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <None Update="TransliterationT4.tt">
       <LastGenOutput>TransliterationT4.generated.cs</LastGenOutput>
