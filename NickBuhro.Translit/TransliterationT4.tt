@@ -98,7 +98,10 @@ namespace NickBuhro.Translit
 #>
         internal static string Latin2Cyrillic<#=lang.lang#>(string text)
 		{
-			var sb = new StringBuilder(text.Length);
+			//var sb = new StringBuilder(text.Length);
+			var arr = new char[text.Length];
+			var index = 0;
+
 			var state = 0;			
 			for (var i = 0; i < text.Length; i++)
 			{
@@ -115,11 +118,13 @@ namespace NickBuhro.Translit
 <# } else { #>
 							default:
 <# } #>
-<# if (t.Value.output.Length > 0) { #>
-								sb.Append(<#=ToLiteral(t.Value.output)#>);
+<# foreach (var o in t.Value.output) { #>
+								//sb.Append(<#=ToLiteral(t.Value.output)#>);
+								arr[index++] = <#=ToLiteral(o)#>;
 <# } #>
 <# if (t.Key.input == "") { #>
-								sb.Append(c);
+								//sb.Append(c);
+								arr[index++] = c;
 <# } #>
 <# if (g.Key != t.Value.state) { #>
 								state = <#=states.IndexOf(t.Value.state)#>;	// <#=ToLiteral(t.Value.state)#>;
@@ -137,14 +142,16 @@ namespace NickBuhro.Translit
 			{
 <# foreach (var p in transitions.Where(t => (t.Key.input == "")).OrderBy(t => t.Key.state)) { #>
 				case <#=states.IndexOf(p.Key.state)#>:	// <#=ToLiteral(p.Key.state)#>
-<# if (p.Value.output != "") { #>
-					sb.Append(<#=ToLiteral(p.Value.output)#>);
+<# foreach (var o in p.Value.output) { #>
+					//sb.Append(<#=ToLiteral(p.Value.output)#>);
+					arr[index++] = <#=ToLiteral(o)#>;
 <# } #>
 					break;				
 <# } #>
 			}
 <# } #>
-			return sb.ToString();
+			//return sb.ToString();
+			return new string(arr, 0, index);
 		}
 <# } #>
 	}

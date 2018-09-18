@@ -39,7 +39,7 @@ namespace NickBuhro.Translit.Benchmark
         [Benchmark]
         public string L2C() => Transliteration.LatinToCyrillic(_latin, Language.Russian);
 
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public string C2Lv1() => new CyrillicToLatinConverter(_cyrillic, Language.Russian).Convert();
     
         [Benchmark]
