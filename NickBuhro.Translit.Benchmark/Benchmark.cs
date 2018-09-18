@@ -1,6 +1,7 @@
 ﻿using System;
 using BenchmarkDotNet.Attributes;
 using NickBuhro.Translit.Sandbox.v1;
+using NickBuhro.Translit.Sandbox.v2;
 
 namespace NickBuhro.Translit.Benchmark
 {
@@ -15,7 +16,7 @@ namespace NickBuhro.Translit.Benchmark
         
         [GlobalSetup]
         public void Setup()
-        {
+        {   
             if (Asset == "Big")
             {
                 _cyrillic = Assets.BigCyrillic;
@@ -24,7 +25,8 @@ namespace NickBuhro.Translit.Benchmark
             else if (Asset == "Small")
             {
                 _cyrillic = Assets.SmallCyrillic;
-                _latin = Assets.SmallLatin;
+                _latin = //Assets.SmallLatin;
+                    FSMTranslit.CyrillicToLatin(_cyrillic, Language.Russian);
             }
             else
             {
@@ -37,6 +39,12 @@ namespace NickBuhro.Translit.Benchmark
 
         [Benchmark]
         public string L2C() => Transliteration.LatinToCyrillic(_latin, Language.Russian);
+
+        [Benchmark]
+        public string C2Lv2() => FSMTranslit.CyrillicToLatin(_cyrillic, Language.Russian);
+
+        [Benchmark]
+        public string L2Cv2() => FSMTranslit.LatinToCyrillic(_latin, Language.Russian);
 
         [Benchmark(Baseline = true)]
         public string C2Lv1() => new CyrillicToLatinConverter(_cyrillic, Language.Russian).Convert();
