@@ -25,21 +25,18 @@ namespace NickBuhro.Translit
             {
                 case Language.Unknown:
                 case Language.Russian:
-                    return Cyrillic2LatinRussian(cyrillicSource);
+                    return CyrillicToLatinRussian(cyrillicSource);
                 case Language.Belorussian:
-                    return Cyrillic2LatinBelorussian(cyrillicSource);
+                    return CyrillicToLatinBelorussian(cyrillicSource);
                 case Language.Ukrainian:
-                    return Cyrillic2LatinUkrainian(cyrillicSource);
+                    return CyrillicToLatinUkrainian(cyrillicSource);
                 case Language.Bulgarian:
-                    return Cyrillic2LatinBulgarian(cyrillicSource);
+                    return CyrillicToLatinBulgarian(cyrillicSource);
                 case Language.Macedonian:
-                    return Cyrillic2LatinMacedonian(cyrillicSource);
+                    return CyrillicToLatinMacedonian(cyrillicSource);
                 default:
                     throw new NotSupportedException();
             }
-
-            //return new CyrillicToLatinConverter(cyrillicSource, language)
-            //    .Convert();
         }
 
         /// <summary>
@@ -55,35 +52,18 @@ namespace NickBuhro.Translit
             {
                 case Language.Unknown:
                 case Language.Russian:
-                    return Latin2CyrillicRussian(latinSource);
+                    return LatinToCyrillicRussian(latinSource);
                 case Language.Belorussian:
-                    return Latin2CyrillicBelorussian(latinSource);
+                    return LatinToCyrillicBelorussian(latinSource);
                 case Language.Ukrainian:
-                    return Latin2CyrillicUkrainian(latinSource);
+                    return LatinToCyrillicUkrainian(latinSource);
                 case Language.Bulgarian:
-                    return Latin2CyrillicBulgarian(latinSource);
+                    return LatinToCyrillicBulgarian(latinSource);
                 case Language.Macedonian:
-                    return Latin2CyrillicMacedonian(latinSource);
+                    return LatinToCyrillicMacedonian(latinSource);
                 default:
                     throw new NotSupportedException();
             }
-
-            //return new LatinToCyrillicConverter(latinSource, language)
-            //    .Convert();
-        }
-
-        /// <summary>        
-        /// The method is deprecated due to an error in the name.
-        /// Use <see cref="LatinToCyrillic(string, Language)"/>.
-        /// </summary>
-        /// <param name="latinSource">Source string.</param>
-        /// <param name="language">Specify it to determine correct transliteration rules 
-        /// (it can be a little bit defferent for languages).</param>
-        /// <returns>Cyrillic string.</returns>
-        [Obsolete("The method is deprecated due to an error in the name.")]
-        public static string LatinToCyrillyc(string latinSource, Language language = Language.Unknown)
-        {
-            return LatinToCyrillic(latinSource, language);
         }
     }
 }
