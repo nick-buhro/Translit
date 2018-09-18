@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace NickBuhro.Translit.v1
+namespace NickBuhro.Translit.Sandbox.v1
 {
-    internal partial struct LatinToCyrillicConverter
+    public partial struct LatinToCyrillicConverter
     {
         private readonly string _src;
         private readonly ConvertRule[] _ruleSet;

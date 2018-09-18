@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace NickBuhro.Translit.v1
+namespace NickBuhro.Translit.Sandbox.v1
 {
-    internal partial struct CyrillicToLatinConverter
+    public partial struct CyrillicToLatinConverter
     {
         private readonly Language _lang;
         private readonly string _src;

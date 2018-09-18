@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NickBuhro.Translit.Sandbox\NickBuhro.Translit.Sandbox.csproj" />
     <ProjectReference Include="..\NickBuhro.Translit\NickBuhro.Translit.csproj" />
   </ItemGroup>
 

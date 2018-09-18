@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using NickBuhro.Translit.v1;
 
 [assembly: InternalsVisibleTo("NickBuhro.Translit.Benchmark")]
 [assembly: InternalsVisibleTo("NickBuhro.Translit.Tests")]

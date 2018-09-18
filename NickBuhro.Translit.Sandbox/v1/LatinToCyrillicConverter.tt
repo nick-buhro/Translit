@@ -80,7 +80,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace NickBuhro.Translit.v1
+namespace NickBuhro.Translit.Sandbox.v1
 {
 	partial struct LatinToCyrillicConverter
 	{

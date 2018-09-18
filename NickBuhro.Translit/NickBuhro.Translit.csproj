@@ -33,14 +33,6 @@
       <LastGenOutput>TransliterationT4.generated.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="v1\CyrillycToLatinConverter.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CyrillycToLatinConverter.generated.cs</LastGenOutput>
-    </None>
-    <None Update="v1\LatinToCyrillicConverter.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LatinToCyrillicConverter.generated.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,16 +44,6 @@
       <DependentUpon>TransliterationT4.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="v1\CyrillycToLatinConverter.generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CyrillycToLatinConverter.tt</DependentUpon>
-    </Compile>
-    <Compile Update="v1\LatinToCyrillicConverter.generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LatinToCyrillicConverter.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
