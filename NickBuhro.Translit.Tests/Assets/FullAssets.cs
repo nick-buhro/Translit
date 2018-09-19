@@ -13,7 +13,7 @@ namespace NickBuhro.Translit.Tests.Assets
 
         private static IEnumerable<object[]> ParseFile(Language lang, string filename, string content)
         {
-            var lines = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = content.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.None);
             for (var i = 0; i < (lines.Length - 1);)
             {
                 if (string.IsNullOrEmpty(lines[i]))
@@ -26,8 +26,8 @@ namespace NickBuhro.Translit.Tests.Assets
                     lang,
                     filename,
                     i + 1,
-                    lines[i].Replace("@", ""),
-                    lines[i + 1].Replace("@", ""));
+                    lines[i].Replace("@", "").Trim(),
+                    lines[i + 1].Replace("@", "").Trim());
 
                 i += 2;
             }

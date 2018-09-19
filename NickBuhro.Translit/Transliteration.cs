@@ -20,6 +20,9 @@ namespace NickBuhro.Translit
         /// <returns>Transliterated string.</returns>
         public static string CyrillicToLatin(string cyrillicSource, Language language = Language.Unknown)
         {
+            if (string.IsNullOrEmpty(cyrillicSource))
+                return cyrillicSource;
+
             switch (language)
             {
                 case Language.Unknown:
@@ -47,6 +50,9 @@ namespace NickBuhro.Translit
         /// <returns>Cyrillic string.</returns>
         public static string LatinToCyrillic(string latinSource, Language language = Language.Unknown)
         {
+            if (string.IsNullOrEmpty(latinSource))
+                return latinSource;
+
             switch (language)
             {
                 case Language.Unknown:

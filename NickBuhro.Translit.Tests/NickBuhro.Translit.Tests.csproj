@@ -10,19 +10,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Belorussian\Full01.txt" />
+    <None Remove="Assets\Belorussian\Full02.txt" />
+    <None Remove="Assets\Belorussian\Round01.txt" />
+    <None Remove="Assets\Bulgarian\Round01.txt" />
+    <None Remove="Assets\Macedonian\Round01.txt" />
     <None Remove="Assets\Russian\Full01.txt" />
     <None Remove="Assets\Russian\Full02.txt" />
     <None Remove="Assets\Russian\Full03.txt" />
     <None Remove="Assets\Russian\Round01.txt" />
     <None Remove="Assets\Russian\Round02.txt" />
+    <None Remove="Assets\Ukrainian\Round01.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Belorussian\Full01.txt" />
+    <EmbeddedResource Include="Assets\Belorussian\Full02.txt" />
+    <EmbeddedResource Include="Assets\Belorussian\Round01.txt" />
+    <EmbeddedResource Include="Assets\Bulgarian\Round01.txt" />
+    <EmbeddedResource Include="Assets\Macedonian\Round01.txt" />
     <EmbeddedResource Include="Assets\Russian\Full01.txt" />
     <EmbeddedResource Include="Assets\Russian\Full02.txt" />
     <EmbeddedResource Include="Assets\Russian\Full03.txt" />
     <EmbeddedResource Include="Assets\Russian\Round01.txt" />
     <EmbeddedResource Include="Assets\Russian\Round02.txt" />
+    <EmbeddedResource Include="Assets\Ukrainian\Round01.txt" />
   </ItemGroup>
 
   <ItemGroup>
