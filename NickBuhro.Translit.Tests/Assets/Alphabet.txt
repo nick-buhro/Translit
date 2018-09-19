@@ -1,0 +1,103 @@
+﻿	Ru	Be	Uk	Bu	Ma
+а	a	a	a	a	a
+б	b	b	b	b	b
+в	v	v	v	v	v
+г	g	h	h	g	g
+ѓ					g`
+ґ			g`		
+д	d	d	d	d	d
+е	e	e	e	e	e
+ё	yo	yo			
+є			ye		
+ж	zh	zh	zh	zh	zh
+з	z	z	z	z	z
+s					z`
+и	i		y`	i	i
+й	j	j	j	j	
+j					j
+i	i	i	i	i	
+ї			yi		
+к	k	k	k	k	k
+ќ					k`
+л	l	l	l	l	l
+љ					l`
+м	m	m	m	m	m
+н	n	n	n	n	п
+њ					n`
+о	o	o	o	o	o
+п	p	p	p	p	p
+р	r	r	r	r	r
+с	s	s	s	s	s
+т	t	t	t	t	t
+у	u	u	u	u	u
+ў		u`			
+ф	f	f	f	f	f
+х	x	x	x	x	x
+ц	cz	cz	cz	cz	cz
+ч	ch	ch	ch	ch	ch
+џ					dh
+ш	sh	sh	sh	sh	sh
+щ	shh		shh	sht	
+ъ	``			a`	
+ы	y`	y`			
+ь	`	`	`	`	
+э	e`	e`			
+ю	yu	yu	yu	yu	
+я	ya	ya	ya	ya	
+’	'	'	'	'	'
+ѣ	ye			ye	
+ѳ	fh			fh	
+ѵ	yh			yh	
+ѫ				о`	
+№	#	#	#	#	#
+					
+А	A	A	A	A	A
+Б	B	B	B	B	B
+В	V	V	V	V	V
+Г	G	H	H	G	G
+Ѓ					G`
+Ґ			G`		
+Д	D	D	D	D	D
+Е	E	E	E	E	E
+Ё	Yo	Yo			
+Є			Ye		
+Ж	Zh	Zh	Zh	Zh	Zh
+З	Z	Z	Z	Z	Z
+S					Z`
+И	I		Y`	I	I
+Й	J	J	J	J	
+J					J
+I	I	I	I	I	
+Ї			Yi		
+К	K	K	K	K	K
+Ќ					K`
+Л	L	L	L	L	L
+Љ					L`
+М	M	M	M	M	M
+Н	N	N	N	N	П
+Њ					N`
+О	O	O	O	O	O
+П	P	P	P	P	P
+Р	R	R	R	R	R
+С	S	S	S	S	S
+Т	T	T	T	T	T
+У	U	U	U	U	U
+Ў		U`			
+Ф	F	F	F	F	F
+Х	X	X	X	X	X
+Ц	Cz	Cz	Cz	Cz	Cz
+Ч	Ch	Ch	Ch	Ch	Ch
+Џ					Dh
+Ш	Sh	Sh	Sh	Sh	Sh
+Щ	Shh		Shh	Sht	
+Ъ	``			A`	
+Ы	Y`	Y`			
+Ь	`	`	`	`	
+Э	E`	E`			
+Ю	Yu	Yu	Yu	Yu	
+Я	Ya	Ya	Ya	Ya	
+’	'	'	'	'	'
+Ѣ	Ye			Ye	
+Ѳ	Fh			Fh	
+Ѵ	Yh			Yh	
+Ѫ				О`	
