@@ -5,7 +5,7 @@ This folder contains test cases which should be handled by different ways.
 ## Alphabet test cases
 
 It is based on transliteration table from original standard.
-It covers all letters for all lenguages.
+It covers all letters for all languages.
 
 Table is defined in tab-delimited file [Alphabet.txt](./Alphabet.txt).
 
