@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -10,31 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Belorussian\Full01.txt" />
-    <None Remove="Assets\Belorussian\Full02.txt" />
-    <None Remove="Assets\Belorussian\Round01.txt" />
-    <None Remove="Assets\Bulgarian\Round01.txt" />
-    <None Remove="Assets\Macedonian\Round01.txt" />
-    <None Remove="Assets\Russian\Full01.txt" />
-    <None Remove="Assets\Russian\Full02.txt" />
-    <None Remove="Assets\Russian\Full03.txt" />
-    <None Remove="Assets\Russian\Round01.txt" />
-    <None Remove="Assets\Russian\Round02.txt" />
-    <None Remove="Assets\Ukrainian\Round01.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Belorussian\Full01.txt" />
-    <EmbeddedResource Include="Assets\Belorussian\Full02.txt" />
-    <EmbeddedResource Include="Assets\Belorussian\Round01.txt" />
-    <EmbeddedResource Include="Assets\Bulgarian\Round01.txt" />
-    <EmbeddedResource Include="Assets\Macedonian\Round01.txt" />
-    <EmbeddedResource Include="Assets\Russian\Full01.txt" />
-    <EmbeddedResource Include="Assets\Russian\Full02.txt" />
-    <EmbeddedResource Include="Assets\Russian\Full03.txt" />
-    <EmbeddedResource Include="Assets\Russian\Round01.txt" />
-    <EmbeddedResource Include="Assets\Russian\Round02.txt" />
-    <EmbeddedResource Include="Assets\Ukrainian\Round01.txt" />
+    <EmbeddedResource Include="Assets\Exact\Be_E01.txt" />
+    <EmbeddedResource Include="Assets\Exact\Be_E02.txt" />
+    <EmbeddedResource Include="Assets\Round\Be_R01.txt" />
+    <EmbeddedResource Include="Assets\Round\Bu_R01.txt" />
+    <EmbeddedResource Include="Assets\Round\Ma_R01.txt" />
+    <EmbeddedResource Include="Assets\Exact\Ru_E01.txt" />
+    <EmbeddedResource Include="Assets\Exact\Ru_E02.txt" />
+    <EmbeddedResource Include="Assets\Exact\Ru_E03.txt" />
+    <EmbeddedResource Include="Assets\Round\Ru_R01.txt" />
+    <EmbeddedResource Include="Assets\Round\Ru_R02.txt" />
+    <EmbeddedResource Include="Assets\Round\Uk_R01.txt" />
   </ItemGroup>
 
   <ItemGroup>
