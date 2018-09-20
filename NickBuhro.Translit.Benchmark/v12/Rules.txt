@@ -1,0 +1,52 @@
+﻿	ru	by	ua	bg	mk	comment
+А	a	a	a	a	a	
+Б	b	b	b	b	b	
+В	v	v	v	v	v	
+Г	g	h	h	g	g	
+Ѓ					g`	
+Ґ			g`			
+Д	d	d	d	d	d	
+Е	e	e	e	e	e	
+Ё	yo	yo				
+Є			ye			
+Ж	zh	zh	zh	zh	zh	
+З	z	z	z	z	z	
+S					z`	
+И	i		y`	i	i	
+Й	j	j	j	j		
+J					j	
+I	i	i	i	i	
+Ї			yi			
+К	k	k	k	k	k	
+Ќ					k`	
+Л	l	l	l	l	l	
+Љ					l`	
+М	m	m	m	m	m	
+Н	n	n	n	n	п	
+Њ					n`	
+О	o	o	o	o	o	
+П	p	p	p	p	p	
+Р	r	r	r	r	r	
+С	s	s	s	s	s	
+Т	t	t	t	t	t	
+У	u	u	u	u	u	
+Ў		u`				
+Ф	f	f	f	f	f	
+Х	x	x	x	x	x	
+Ц	cz, c	cz, c	cz, c	cz, c	cz, c	рекомендуется использовать С перед буквами I, Е, Y, J; в остальных случаях CZ
+Ч	ch	ch	ch	ch	ch	
+Џ					dh	
+Ш	sh	sh	sh	sh	sh	
+Щ	shh		shh	sht		
+Ъ	``			a`		для русского языка — 2 грависа
+Ы	y`	y`				
+Ь	`	`	`	`		гравис
+Э	e`	e`				
+Ю	yu	yu	yu	yu		
+Я	ya	ya	ya	ya		
+’	'	'	'	'	'	апостроф
+Ѣ	ye			ye		ять
+Ѳ	fh			fh		фита
+Ѵ	yh			yh		ижица
+Ѫ				о`		юс
+№	#	#	#	#	#

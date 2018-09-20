@@ -1,7 +1,7 @@
 ﻿using System;
 using BenchmarkDotNet.Attributes;
-using NickBuhro.Translit.Sandbox.v1;
-using NickBuhro.Translit.Sandbox.v2;
+using NickBuhro.Translit.Benchmark.v12;
+using NickBuhro.Translit.Benchmark.v13;
 
 namespace NickBuhro.Translit.Benchmark
 {
@@ -33,22 +33,25 @@ namespace NickBuhro.Translit.Benchmark
             }
         }
 
-        [Benchmark]
-        public string C2L() => Transliteration.CyrillicToLatin(_cyrillic, Language.Russian);
-
-        [Benchmark]
-        public string L2C() => Transliteration.LatinToCyrillic(_latin, Language.Russian);
-
-        [Benchmark]
-        public string C2Lv2() => FSMTranslit.CyrillicToLatin(_cyrillic, Language.Russian);
-
-        [Benchmark]
-        public string L2Cv2() => FSMTranslit.LatinToCyrillic(_latin, Language.Russian);
 
         [Benchmark(Baseline = true)]
-        public string C2Lv1() => new CyrillicToLatinConverter(_cyrillic, Language.Russian).Convert();
-    
+        public string C2Lv12() => new CyrillicToLatinConverter(_cyrillic, Language.Russian).Convert();
+
         [Benchmark]
-        public string L2Cv1() => new LatinToCyrillicConverter(_latin, Language.Russian).Convert();        
+        public string L2Cv12() => new LatinToCyrillicConverter(_latin, Language.Russian).Convert();
+
+
+        [Benchmark]
+        public string C2Lv13() => FSMTranslit.CyrillicToLatin(_cyrillic, Language.Russian);
+
+        [Benchmark]
+        public string L2Cv13() => FSMTranslit.LatinToCyrillic(_latin, Language.Russian);
+
+
+        [Benchmark]
+        public string C2Lv14() => Transliteration.CyrillicToLatin(_cyrillic, Language.Russian);
+
+        [Benchmark]
+        public string L2Cv14() => Transliteration.LatinToCyrillic(_latin, Language.Russian);
     }
 }

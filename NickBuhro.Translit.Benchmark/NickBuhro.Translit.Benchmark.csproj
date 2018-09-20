@@ -10,12 +10,38 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NickBuhro.Translit.Sandbox\NickBuhro.Translit.Sandbox.csproj" />
     <ProjectReference Include="..\NickBuhro.Translit\NickBuhro.Translit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="v12\CyrillycToLatinConverter.generated.cs">
+      <DependentUpon>CyrillycToLatinConverter.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="v12\LatinToCyrillicConverter.generated.cs">
+      <DependentUpon>LatinToCyrillicConverter.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="v12\CyrillycToLatinConverter.tt">
+      <LastGenOutput>CyrillycToLatinConverter.generated.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="v12\LatinToCyrillicConverter.tt">
+      <LastGenOutput>LatinToCyrillicConverter.generated.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="v12\Rules.txt">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
 
 </Project>

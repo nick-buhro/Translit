@@ -2,7 +2,7 @@
 #      general configuration      #
 #---------------------------------#
 
-version: 1.3.{build}
+version: 1.4.{build}
 
 branches:
   only:

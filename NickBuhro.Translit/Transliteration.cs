@@ -35,10 +35,10 @@ namespace NickBuhro.Translit
                 case Language.Bulgarian:
                     return CyrillicToLatinBulgarian(cyrillicSource);
                 case Language.Macedonian:
-                    return CyrillicToLatinMacedonian(cyrillicSource);
-                default:
-                    throw new NotSupportedException();
+                    return CyrillicToLatinMacedonian(cyrillicSource);                    
             }
+
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace NickBuhro.Translit
                     return LatinToCyrillicBulgarian(latinSource);
                 case Language.Macedonian:
                     return LatinToCyrillicMacedonian(latinSource);
-                default:
-                    throw new NotSupportedException();
             }
+
+            throw new NotSupportedException();
         }
     }
 }
