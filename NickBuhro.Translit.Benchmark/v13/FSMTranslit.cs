@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -9,13 +9,13 @@ namespace NickBuhro.Translit.Benchmark.v13
 {
     internal static class FSMTranslit
     {
-        private static readonly Dictionary<Language, TransitionCollection[]> _c2l;
-        private static readonly Dictionary<Language, TransitionCollection[]> _l2c;
+        private static readonly Dictionary<Language, (string stateName, string fallbackText, Dictionary<char, (int state, string text)> transitions)[]> _c2l;
+        private static readonly Dictionary<Language, (string stateName, string fallbackText, Dictionary<char, (int state, string text)> transitions)[]> _l2c;
         
         static FSMTranslit()
         {
             var rules = new Rules();
-            _c2l = new Dictionary<Language, TransitionCollection[]>
+            _c2l = new Dictionary<Language, (string stateName, string fallbackText, Dictionary<char, (int state, string text)> transitions)[]>
             {
                 { Language.Russian, BuildFSM(rules.CreateCyrillicToLatinDictionary(Language.Russian)) },
                 { Language.Belorussian, BuildFSM(rules.CreateCyrillicToLatinDictionary(Language.Belorussian)) },
@@ -23,7 +23,7 @@ namespace NickBuhro.Translit.Benchmark.v13
                 { Language.Bulgarian, BuildFSM(rules.CreateCyrillicToLatinDictionary(Language.Bulgarian)) },
                 { Language.Macedonian, BuildFSM(rules.CreateCyrillicToLatinDictionary(Language.Macedonian)) },
             };
-            _l2c = new Dictionary<Language, TransitionCollection[]>
+            _l2c = new Dictionary<Language, (string stateName, string fallbackText, Dictionary<char, (int state, string text)> transitions)[]>
             {
                 { Language.Russian, BuildFSM(rules.CreateLatinToCyrillicDictionary(Language.Russian)) },
                 { Language.Belorussian, BuildFSM(rules.CreateLatinToCyrillicDictionary(Language.Belorussian)) },
@@ -45,7 +45,7 @@ namespace NickBuhro.Translit.Benchmark.v13
             return Convert(text, fsm);
         }
 
-        internal static string Convert(string text, TransitionCollection[] fsm)
+        internal static string Convert(string text, (string stateName, string fallbackText, Dictionary<char, (int state, string text)> transitions)[] fsm)
         {
             var sb = new StringBuilder(text.Length);
             
@@ -54,58 +54,45 @@ namespace NickBuhro.Translit.Benchmark.v13
             {
                 var c = text[i];
                 var tc = fsm[state];
-                if (tc.TryGetValue(c, out Output output))
+                if (tc.transitions.TryGetValue(c, out (int state, string text) output))
                 {
-                    state = output.State;
-                    sb.Append(output.Text);
+                    state = output.state;
+                    sb.Append(output.text);
                 }
                 else
                 {
                     state = 0;
-                    sb.Append(tc.DefaultOutputText);
+                    sb.Append(tc.fallbackText);
                     sb.Append(c);
                 }
             }
 
             {
                 var tc = fsm[state];
-                sb.Append(tc.DefaultOutputText);
+                sb.Append(tc.fallbackText);
             }
 
             return sb.ToString();
         }
 
-        internal static TransitionCollection[] BuildFSM(Dictionary<string, string> replacements)
+
+
+        internal static (string stateName, string fallbackText, Dictionary<char, (int state, string text)> transitions)[] BuildFSM(Dictionary<string, string> replacements)
         {
             // Find all states
 
-            var stateNames = new List<string> { "" };
-            foreach (var k in replacements.Keys)
-            {
-                for (var i = 1; i < k.Length; i++)
-                {
-                    var s = k.Substring(0, i);
-                    if (!stateNames.Contains(s))
-                        stateNames.Add(s);
-                }
-            }
-            stateNames.Sort(new StateComparer());
+            var result = GetStates(replacements)
+                .OrderBy(s => s.Length)
+                .ThenBy(s => s)
+                .Select(s => (stateName: s, fallbackText: "", transitions: new Dictionary<char, (int state, string text)>()))
+                .ToArray();
 
-            var stateLookup = new Dictionary<string, int>(stateNames.Count);
-            for (var i = 0; i < stateNames.Count; i++)
-            {
-                stateLookup.Add(stateNames[i], i);
-            }
-
-            // Init result array
-
-            var result = new TransitionCollection[stateLookup.Count];
+            var stateLookup = new Dictionary<string, int>(result.Length);
             for (var i = 0; i < result.Length; i++)
             {
-                result[i] = new TransitionCollection();
+                stateLookup.Add(result[i].stateName, i);
             }
-            result[0].DefaultOutputText = "";
-            
+                        
             // Generate simple transitions without output
 
             foreach (var k in replacements.Keys)
@@ -114,10 +101,10 @@ namespace NickBuhro.Translit.Benchmark.v13
                 {
                     var state = stateLookup[k.Substring(0, i - 1)];
                     var input = k[i - 1];
-                    var output = new Output(stateLookup[k.Substring(0, i)], "");
-                    if (!result[state].ContainsKey(input))
+                    var output = (stateLookup[k.Substring(0, i)], "");
+                    if (!result[state].transitions.ContainsKey(input))
                     {
-                        result[state].Add(input, output);
+                        result[state].transitions.Add(input, output);
                     }
                 }
             }
@@ -128,10 +115,10 @@ namespace NickBuhro.Translit.Benchmark.v13
             {
                 var state = stateLookup[p.Key.Substring(0, p.Key.Length - 1)];
                 var input = p.Key[p.Key.Length - 1];
-                var output = new Output(0, p.Value);
-                if (!result[state].ContainsKey(input))
+                var output = (0, p.Value);
+                if (!result[state].transitions.ContainsKey(input))
                 {
-                    result[state].Add(input, output);
+                    result[state].transitions.Add(input, output);
                 }
             }
 
@@ -139,7 +126,7 @@ namespace NickBuhro.Translit.Benchmark.v13
 
             for (var state = 1; state < result.Length; state++)
             {
-                var tail = stateNames[state];
+                var tail = result[state].stateName;
                 var outputText = "";
                 for (; ; )
                 {
@@ -164,15 +151,15 @@ namespace NickBuhro.Translit.Benchmark.v13
                     
                     if (stateLookup.TryGetValue(tail, out int outputState))
                     {
-                        foreach (var t in result[outputState])
+                        foreach (var t in result[outputState].transitions)
                         {
-                            if (!result[state].ContainsKey(t.Key))
-                            {
-                                var output = new Output(t.Value.State, outputText + t.Value.Text);
-                                result[state].Add(t.Key, output);
+                            if (!result[state].transitions.ContainsKey(t.Key))
+                            {                                
+                                var output = (t.Value.state, outputText + t.Value.text);
+                                result[state].transitions.Add(t.Key, output);
                             }
                         }
-                        result[state].DefaultOutputText = outputText;
+                        result[state].fallbackText = outputText;
                         break;
                     }                    
                 }
@@ -182,5 +169,18 @@ namespace NickBuhro.Translit.Benchmark.v13
 
             return result;
         }        
+
+        private static IEnumerable<string> GetStates(Dictionary<string, string> replacements)
+        {
+            var result = new HashSet<string> { "" };
+            foreach (var k in replacements.Keys)
+            {
+                for (var i = 1; i < k.Length; i++)
+                {
+                    result.Add(k.Substring(0, i));
+                }
+            }
+            return result;
+        }
     }
 }

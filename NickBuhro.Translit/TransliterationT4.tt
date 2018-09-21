@@ -10,27 +10,22 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".generated.cs" #>
 <#	
-	var langCollection = new (string lang, Func<(string ru, string by, string ua, string bg, string mk), string> selector)[]
+	var langCollection = new string[]
 	{
-		("Russian", t => t.ru),
-		("Belorussian", t => t.by),
-		("Ukrainian", t => t.ua),
-		("Bulgarian", t => t.bg),
-		("Macedonian", t => t.mk)
+		"Russian",
+		"Belorussian",
+		"Ukrainian",
+		"Bulgarian",
+		"Macedonian"
 	};
 		
-	var definitions = new List<(string name, List<string> states, Dictionary<string, Dictionary<string, (string outputState, string outputText)>> transitions)>();
+	var definitions = new List<(string name, Dictionary<string, string> replacements)>();
 
 	var rules = new Rules();
-	foreach (var l in langCollection)
+	for (var i = 0; i < langCollection.Length; i++)
 	{
-		var transitions = Parse(rules.CreateCyrillicToLatinDictionary(l.selector));
-		var states = transitions.Keys.OrderBy(k => k).ToList();
-		definitions.Add(("CyrillicToLatin" + l.lang, states, transitions));
-	
-		transitions = Parse(rules.CreateLatinToCyrillicDictionary(l.selector));
-		states = transitions.Keys.OrderBy(k => k).ToList();
-		definitions.Add(("LatinToCyrillic" + l.lang, states, transitions));
+		definitions.Add((name: "CyrillicToLatin" + langCollection[i], replacements: rules.CreateCyrillicToLatinDictionary(i)));
+		definitions.Add((name: "LatinToCyrillic" + langCollection[i], replacements: rules.CreateLatinToCyrillicDictionary(i)));
 	}
 #>
 // ------------------------------------------------------------------------------
@@ -46,11 +41,10 @@ namespace NickBuhro.Translit
 {
 	partial class Transliteration
 	{
-<# foreach (var md in definitions) { #>
+<# foreach (var md in definitions) { var fsm = BuildFSM(md.replacements); #>
 		internal static string <#=md.name#>(string text)
 		{
-			var index = 0;
-			var arr = new char[text.Length<#= md.name[0] == 'C' ? " * 3" : ""  #>];
+			var sb = new CustomStringBuilder(text.Length<#= md.name[0] == 'C' ? " * 3" : ""  #>);
 			
 			var state = 0;			
 			for (var i = 0; i < text.Length; i++)
@@ -58,292 +52,303 @@ namespace NickBuhro.Translit
 				var c = text[i];
 				switch (state)
 				{
-<# foreach (var state in md.states) { #>
-					case <#=md.states.IndexOf(state)#>:	// <#=ToLiteral(state)#>
+<# for (var s = 0; s < fsm.Length; s++) { #>
+					case <#=s#>:	// <#=ToLiteral(fsm[s].stateName)#>
 						switch (c)
 						{
-<# foreach (var t in md.transitions[state].OrderBy(p => p.Key == "").ThenBy(p => p.Key)) { #>
-<# if (t.Key != "") { #>
-							case <#=ToLiteral(t.Key[0])#>:
-<# } else { #>
-							default:
+<# foreach (var t in fsm[s].transitions.OrderBy(tr => tr.Key)) { #>
+							case <#=ToLiteral(t.Key)#>:							
+<# foreach (var o in t.Value.text) { #>
+								sb.Append(<#=ToLiteral(o)#>);
 <# } #>
-<# foreach (var o in t.Value.outputText) { #>
-								arr[index++] = <#=ToLiteral(o)#>;
-<# } #>
-<# if (t.Key == "") { #>
-								arr[index++] = c;
-<# } #>
-<# if (state != t.Value.outputState) { #>
-								state = <#=md.states.IndexOf(t.Value.outputState)#>;	// <#=ToLiteral(t.Value.outputState)#>;
+<# if (s != t.Value.state) { #>
+								state = <#=t.Value.state#>;	// <#=ToLiteral(fsm[t.Value.state].stateName)#>
 <# } #>
 								break;
 <# } #>
+							default:
+<# foreach (var o in fsm[s].fallbackText) { #>
+								sb.Append(<#=ToLiteral(o)#>);
+<# } #>
+								sb.Append(c);
+<# if (s != 0) { #>
+								state = 0;	// ""
+<# } #>
+								break;
 						}
 						break;				
 <# } #>
 				}
 			}
-<# if (md.states.Count > 1) { #>
+<# if (fsm.Length > 1) { #>
 
 			switch (state)
 			{
-<# foreach (var state in md.states.Where(s => s != "")) { #>
-				case <#=md.states.IndexOf(state)#>:	// <#=ToLiteral(state)#>
-<# foreach (var o in md.transitions[state][""].outputText) { #>
-					arr[index++] = <#=ToLiteral(o)#>;
+<# for (var s = 1; s < fsm.Length; s++) { #>
+				case <#=s#>:	// <#=ToLiteral(fsm[s].stateName)#>
+<# foreach (var o in fsm[s].fallbackText) { #>
+					sb.Append(<#=ToLiteral(o)#>);
 <# } #>
 					break;
 <# } #>
 			}
 <# } #>
-			return new string(arr, 0, index);
+			return sb.ToString();
 		}
 
 <# } #>
 	}
 }
-<#+		//----------------------------------------------------------------
-		// Helpers
-		//----------------------------------------------------------------
+<#+	
+//----------------------------------------------------------------
+// Helpers
+//----------------------------------------------------------------
 
-		private static string ToLiteral(object input)
+private static string ToLiteral(object input)
+{
+    using (var writer = new StringWriter())
+    using (var provider = CodeDomProvider.CreateProvider("CSharp"))
+    {
+        provider.GenerateCodeFromExpression(new CodePrimitiveExpression(input), writer, null);
+        return writer.ToString();
+    }
+}
+
+//----------------------------------------------------------------
+// Transliteration rules
+//----------------------------------------------------------------
+
+internal sealed class Rules
+{
+    private const string _crules = "IEYJ";
+	
+    private readonly Dictionary<string, string[]> _data = new Dictionary<string, string[]>()
+    {
+        { "а", new [] { "a", "a", "a", "a", "a" } },
+        { "б", new [] { "b", "b", "b", "b", "b" } },
+        { "в", new [] { "v", "v", "v", "v", "v" } },
+        { "г", new [] { "g", "h", "h", "g", "g" } },
+        { "ѓ", new [] { null, null, null, null, "g`" } },
+        { "ґ", new [] { null, null, "g`", null, null } },
+        { "д", new [] { "d", "d", "d", "d", "d" } },
+        { "е", new [] { "e", "e", "e", "e", "e" } },
+        { "ё", new [] { "yo", "yo", null, null, null } },
+        { "є", new [] { null, null, "ye", null, null } },
+        { "ж", new [] { "zh", "zh", "zh", "zh", "zh" } },
+        { "з", new [] { "z", "z", "z", "z", "z" } },
+        { "s", new [] { null, null, null, null, "z`" } },
+        { "и", new [] { "i", null, "y`", "i", "i" } },
+        { "й", new [] { "j", "j", "j", "j", null } },
+        { "j", new [] { null, null, null, null, "j" } },
+        { "i", new [] { "i", "i", "i", "i", null } },
+        { "ї", new [] { null, null, "yi", null, null } },
+        { "к", new [] { "k", "k", "k", "k", "k" } },
+        { "ќ", new [] { null, null, null, null, "k`" } },
+        { "л", new [] { "l", "l", "l", "l", "l" } },
+        { "љ", new [] { null, null, null, null, "l`" } },
+        { "м", new [] { "m", "m", "m", "m", "m" } },
+        { "н", new [] { "n", "n", "n", "n", "п" } },
+        { "њ", new [] { null, null, null, null, "n`" } },
+        { "о", new [] { "o", "o", "o", "o", "o" } },
+        { "п", new [] { "p", "p", "p", "p", "p" } },
+        { "р", new [] { "r", "r", "r", "r", "r" } },
+        { "с", new [] { "s", "s", "s", "s", "s" } },
+        { "т", new [] { "t", "t", "t", "t", "t" } },
+        { "у", new [] { "u", "u", "u", "u", "u" } },
+        { "ў", new [] { null, "u`", null, null, null } },
+        { "ф", new [] { "f", "f", "f", "f", "f" } },
+        { "х", new [] { "x", "x", "x", "x", "x" } },
+        { "ц", new [] { "cz", "cz", "cz", "cz", "cz" } },
+        { "ч", new [] { "ch", "ch", "ch", "ch", "ch" } },
+        { "џ", new [] { null, null, null, null, "dh" } },
+        { "ш", new [] { "sh", "sh", "sh", "sh", "sh" } },
+        { "щ", new [] { "shh", null, "shh", "sht", null } },
+        { "ъ", new [] { "``", null, null, "a`", null } },
+        { "ы", new [] { "y`", "y`", null, null, null } },
+        { "ь", new [] { "`", "`", "`", "`", null } },
+        { "э", new [] { "e`", "e`", null, null, null } },
+        { "ю", new [] { "yu", "yu", "yu", "yu", null } },
+        { "я", new [] { "ya", "ya", "ya", "ya", null } },
+        { "’", new [] { "'", "'", "'", "'", "'" } },
+        { "ѣ", new [] { "ye", null, null, "ye", null } },
+        { "ѳ", new [] { "fh", null, null, "fh", null } },
+        { "ѵ", new [] { "yh", null, null, "yh", null } },
+        { "ѫ", new [] { null, null, null, "о`", null } },
+        { "№", new [] { "#", "#", "#", "#", "#" } }
+    };
+
+
+    public Dictionary<string, string> CreateCyrillicToLatinDictionary(int lang)
+    {
+        var result = new Dictionary<string, string>();
+
+        foreach (var p in _data)
         {
-            using (var writer = new StringWriter())
-            using (var provider = CodeDomProvider.CreateProvider("CSharp"))
+            var loCyrillic = p.Key;
+            var loLatin = p.Value[lang];
+
+            if (loLatin == null) continue;
+			if ((loCyrillic == loLatin) && (loCyrillic.Length == 1))
+				continue;
+
+            var upCyrillic = loCyrillic.ToUpper();
+            var upLatin = char.ToUpper(loLatin[0]) + loLatin.Substring(1);
+
+            result.Add(loCyrillic, loLatin);
+            if (loCyrillic != upCyrillic)
             {
-                provider.GenerateCodeFromExpression(new CodePrimitiveExpression(input), writer, null);
-                return writer.ToString();
+                result.Add(upCyrillic, upLatin);
+                if (_crules.IndexOf(upLatin[0]) >= 0)
+                {
+                    result["ц" + loCyrillic] = "c" + loLatin;
+                    result["Ц" + loCyrillic] = "C" + loLatin;
+                    result["ц" + upCyrillic] = "c" + upLatin;
+                    result["Ц" + upCyrillic] = "C" + upLatin;
+                }
             }
         }
 
-		//----------------------------------------------------------------
-		// Transliteration rules
-		//----------------------------------------------------------------
+        return result;
+    }
 
-		private sealed class Rules
+    public Dictionary<string, string> CreateLatinToCyrillicDictionary(int lang)
+    {
+        var result = new Dictionary<string, string>();
+
+        foreach (var p in _data)
         {
-            private readonly Dictionary<string, (string ru, string by, string ua, string bg, string mk)> _data;
+            var loCyrillic = p.Key;
+            var loLatin = p.Value[lang];
 
-            public Rules()
+            if (loLatin == null) continue;
+
+            var upCyrillic = loCyrillic.ToUpper();
+            var upLatin = char.ToUpper(loLatin[0]) + loLatin.Substring(1);
+
+            if (!result.ContainsKey(loLatin))
             {
-                _data = new Dictionary<string, (string ru, string by, string ua, string bg, string mk)>
+                result.Add(loLatin, loCyrillic);
+                if (!result.ContainsKey(upLatin))
                 {
-                    { "а", ( "a", "a", "a", "a", "a" ) },
-                    { "б", ( "b", "b", "b", "b", "b" ) },
-                    { "в", ( "v", "v", "v", "v", "v" ) },
-                    { "г", ( "g", "h", "h", "g", "g" ) },
-                    { "ѓ", ( "", "", "", "", "g`" ) },
-                    { "ґ", ( "", "", "g`", "", "" ) },
-                    { "д", ( "d", "d", "d", "d", "d" ) },
-                    { "е", ( "e", "e", "e", "e", "e" ) },
-                    { "ё", ( "yo", "yo", "", "", "" ) },
-                    { "є", ( "", "", "ye", "", "" ) },
-                    { "ж", ( "zh", "zh", "zh", "zh", "zh" ) },
-                    { "з", ( "z", "z", "z", "z", "z" ) },
-                    { "s", ( "", "", "", "", "z`" ) },
-                    { "и", ( "i", "", "y`", "i", "i" ) },
-                    { "й", ( "j", "j", "j", "j", "" ) },
-                    { "j", ( "", "", "", "", "j" ) },
-                    { "i", ( "i", "i", "i", "i", "" ) },
-                    { "ї", ( "", "", "yi", "", "" ) },
-                    { "к", ( "k", "k", "k", "k", "k" ) },
-                    { "ќ", ( "", "", "", "", "k`" ) },
-                    { "л", ( "l", "l", "l", "l", "l" ) },
-                    { "љ", ( "", "", "", "", "l`" ) },
-                    { "м", ( "m", "m", "m", "m", "m" ) },
-                    { "н", ( "n", "n", "n", "n", "п" ) },
-                    { "њ", ( "", "", "", "", "n`" ) },
-                    { "о", ( "o", "o", "o", "o", "o" ) },
-                    { "п", ( "p", "p", "p", "p", "p" ) },
-                    { "р", ( "r", "r", "r", "r", "r" ) },
-                    { "с", ( "s", "s", "s", "s", "s" ) },
-                    { "т", ( "t", "t", "t", "t", "t" ) },
-                    { "у", ( "u", "u", "u", "u", "u" ) },
-                    { "ў", ( "", "u`", "", "", "" ) },
-                    { "ф", ( "f", "f", "f", "f", "f" ) },
-                    { "х", ( "x", "x", "x", "x", "x" ) },
-                    { "ц", ( "cz, c", "cz, c", "cz, c", "cz, c", "cz, c" ) },
-                    { "ч", ( "ch", "ch", "ch", "ch", "ch" ) },
-                    { "џ", ( "", "", "", "", "dh" ) },
-                    { "ш", ( "sh", "sh", "sh", "sh", "sh" ) },
-                    { "щ", ( "shh", "", "shh", "sht", "" ) },
-                    { "ъ", ( "``", "", "", "a`", "" ) },
-                    { "ы", ( "y`", "y`", "", "", "" ) },
-                    { "ь", ( "`", "`", "`", "`", "" ) },
-                    { "э", ( "e`", "e`", "", "", "" ) },
-                    { "ю", ( "yu", "yu", "yu", "yu", "" ) },
-                    { "я", ( "ya", "ya", "ya", "ya", "" ) },
-                    { "’", ( "'", "'", "'", "'", "'" ) },
-                    { "ѣ", ( "ye", "", "", "ye", "" ) },
-                    { "ѳ", ( "fh", "", "", "fh", "" ) },
-                    { "ѵ", ( "yh", "", "", "yh", "" ) },
-                    { "ѫ", ( "", "", "", "о`", "" ) },
-                    { "№", ( "#", "#", "#", "#", "#" ) }
-                };
-            }
-
-            public Dictionary<string, string> CreateCyrillicToLatinDictionary(Func<(string ru, string by, string ua, string bg, string mk), string> selector)
-            {
-                var result = new Dictionary<string, string>();
-                foreach (var p in _data)
-                {
-                    var loCyrillic = p.Key;
-                    var loLatin = selector(p.Value);
-
-                    if ((loCyrillic == "ц") || (loLatin == "")) continue;
-
-                    var upCyrillic = loCyrillic.ToUpper();
-                    var upLatin = char.ToUpper(loLatin[0]) + loLatin.Substring(1);
-
-                    result.Add(loCyrillic, loLatin);
-                    if (!result.ContainsKey(upCyrillic))
-                    {
-                        result.Add(upCyrillic, upLatin);
-                    }
+                    result.Add(upLatin, upCyrillic);
                 }
-
-                // Ц - рекомендуется использовать С перед буквами I, Е, Y, J; в остальных случаях CZ
-                
-                var crules = new[] { 'i', 'e', 'y', 'j', 'I', 'E', 'Y', 'J' };
-                foreach (var c in crules)
-                {
-                    result.Add("ц" + c.ToString(), "c" + c.ToString());
-                    result.Add("Ц" + c.ToString(), "C" + c.ToString());
-                    
-                    foreach (var pair in result.Where(p => p.Value[0] == c).ToList())
-                    {
-                        result["ц" + pair.Key] = "c" + pair.Value;
-                        result["Ц" + pair.Key] = "C" + pair.Value;
-                    }
-                }
-
-                result.Add("ц", "cz");
-                result.Add("Ц", "Cz");
-
-                return result;
-            }
-
-            public Dictionary<string, string> CreateLatinToCyrillicDictionary(Func<(string ru, string by, string ua, string bg, string mk), string> selector)
-            {
-                var result = new Dictionary<string, string>();
-                foreach (var p in _data)
-                {
-                    var loCyrillic = p.Key;
-                    var loLatin = selector(p.Value);
-
-                    if ((loCyrillic == "ц") || (loLatin == "")) continue;
-
-                    var upCyrillic = loCyrillic.ToUpper();
-                    var upLatin = char.ToUpper(loLatin[0]) + loLatin.Substring(1);
-
-                    if (!result.ContainsKey(loLatin))
-                    {
-                        result.Add(loLatin, loCyrillic);
-                    }
-
-                    if (!result.ContainsKey(upLatin))
-                    {
-                        result.Add(upLatin, upCyrillic);
-                    }
-                }
-
-                // Ц                
-
-                result.Add("cz", "ц");
-                result.Add("Cz", "Ц");
-                result.Add("c", "ц");
-                result.Add("C", "Ц");
-
-                return result;
             }
         }
 
-		//----------------------------------------------------------------
-		// FSM Parser
-		//----------------------------------------------------------------
+        result.Add("c", "ц");
+        result.Add("C", "Ц");
 
-        internal static Dictionary<string, Dictionary<string, (string outputState, string outputText)>> Parse(IDictionary<string, string> replacements)
+        return result;
+    }
+}
+
+//----------------------------------------------------------------
+// FSM Parser
+//----------------------------------------------------------------
+
+internal static (string stateName, string fallbackText, Dictionary<char, (int state, string text)> transitions)[] BuildFSM(Dictionary<string, string> replacements)
+{
+    // Find all states
+
+    var result = GetStates(replacements)
+        .OrderBy(s => s.Length)
+        .ThenBy(s => s)
+        .Select(s => (stateName: s, fallbackText: "", transitions: new Dictionary<char, (int state, string text)>()))
+        .ToArray();
+
+    var stateLookup = new Dictionary<string, int>(result.Length);
+    for (var i = 0; i < result.Length; i++)
+    {
+        stateLookup.Add(result[i].stateName, i);
+    }
+                        
+    // Generate simple transitions without output
+
+    foreach (var k in replacements.Keys)
+    {
+        for (var i = 1; i < k.Length; i++)
         {
-            var result = new Dictionary<string, Dictionary<string, (string outputState, string outputText)>>
-            {                
-                { "", new Dictionary<string, (string outputState, string outputText)>() { { "", ("", "") } } }  // Initial state with fallback loop
-            };
-
-            // Generate simple transitions without output
-
-            foreach (var k in replacements.Keys)
+            var state = stateLookup[k.Substring(0, i - 1)];
+            var input = k[i - 1];
+            var output = (stateLookup[k.Substring(0, i)], "");
+            if (!result[state].transitions.ContainsKey(input))
             {
-                for (var i = 1; i < k.Length; i++)
-                {
-                    var state = k.Substring(0, i - 1);
-                    var input = k[i - 1].ToString();
-
-                    if (!result.ContainsKey(state))
-                        result.Add(state, new Dictionary<string, (string outputState, string outputText)>());
-
-                    if (!result[state].ContainsKey(input))
-                        result[state].Add(input, (k.Substring(0, i), ""));
-                }
+                result[state].transitions.Add(input, output);
             }
+        }
+    }
 
-            // Generate transitions for completed replacements
+    // Generate transitions for completed replacements
 
-            foreach (var p in replacements)
+    foreach (var p in replacements)
+    {
+        var state = stateLookup[p.Key.Substring(0, p.Key.Length - 1)];
+        var input = p.Key[p.Key.Length - 1];
+        var output = (0, p.Value);
+        if (!result[state].transitions.ContainsKey(input))
+        {
+            result[state].transitions.Add(input, output);
+        }
+    }
+
+    // Generate transitions to go back
+
+    for (var state = 1; state < result.Length; state++)
+    {
+        var tail = result[state].stateName;
+        var outputText = "";
+        for (; ; )
+        {
+            string replSource = tail[0].ToString();
+            string replTarget = replSource;
             {
-                var state = p.Key.Substring(0, p.Key.Length - 1);
-                var input = p.Key[p.Key.Length - 1].ToString();
-
-                if (!result.ContainsKey(state))
-                    result.Add(state, new Dictionary<string, (string outputState, string outputText)>());
-
-                if (!result[state].ContainsKey(input))
-                    result[state].Add(input, ("", p.Value));
-            }            
-
-            // Generate transitions to go back
-            
-            foreach (var state in result.Keys.Where(s => s != "").OrderBy(s => s.Length).ToList())
-            {
-                var tail = state;
-                var output = "";
-                for (; ; )
+                var s = tail;
+                while (s.Length > 0)
                 {
-                    var replacement = FindReplacement(replacements, tail);
-
-                    output += replacement.output;
-                    tail = tail.Substring(replacement.source.Length);
-
-                    
-                    if (result.TryGetValue(tail, out Dictionary<string, (string outputState, string outputText)> list))
+                    if (replacements.TryGetValue(s, out string value))
                     {
-                        foreach (var t in list)
-                        {
-                            if (!result[state].ContainsKey(t.Key))
-                                result[state].Add(t.Key, (t.Value.outputState, output + t.Value.outputText));
-                        }
+                        replSource = s;
+                        replTarget = value;
                         break;
                     }
+                    s = s.Substring(0, s.Length - 1);
                 }
             }
 
-            //
-
-            return result;
-        }
-
-        private static (string source, string output) FindReplacement(IDictionary<string, string> replacements, string value)
-        {
-            var s = value;
-            while (s.Length > 0)
+            outputText += replTarget;
+            tail = tail.Substring(replSource.Length);
+                    
+            if (stateLookup.TryGetValue(tail, out int outputState))
             {
-                if (replacements.TryGetValue(s, out string result))
-                    return (s, result);
-
-                s = s.Substring(0, s.Length - 1);
-            }
-
-            s = value.Substring(0, 1);
-            return (s, s);
+                foreach (var t in result[outputState].transitions)
+                {
+                    if (!result[state].transitions.ContainsKey(t.Key))
+                    {                                
+                        var output = (t.Value.state, outputText + t.Value.text);
+                        result[state].transitions.Add(t.Key, output);
+                    }
+                }
+                result[state].fallbackText = outputText;
+                break;
+            }                    
         }
+    }
+
+    //
+
+    return result;
+}        
+
+private static IEnumerable<string> GetStates(Dictionary<string, string> replacements)
+{
+    var result = new HashSet<string> { "" };
+    foreach (var k in replacements.Keys)
+    {
+        for (var i = 1; i < k.Length; i++)
+        {
+            result.Add(k.Substring(0, i));
+        }
+    }
+    return result;
+}
 #>
