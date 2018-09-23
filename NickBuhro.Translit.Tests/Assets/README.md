@@ -1,15 +1,15 @@
-# NickBuhro.Translit.Tests.TestCase
+# NickBuhro.Translit.Tests.Assets
 
-This folder contain test cases for all languages.
-Test cases for specific language should be located in subfolder (subfolder name = target language).
+This folder contains test cases which should be handled by different ways.
 
-All cases are separated into files of 2 types:
+## Alphabet test cases
 
-1. FullXX.txt
-2. RoundXX.txt
+It is based on transliteration table from original standard.
+It covers all letters for all languages.
 
+Table is defined in tab-delimited file [Alphabet.txt](./Alphabet.txt).
 
-## FullXX.txt
+## Exact test cases
 
 File with accurate test cases.
 
@@ -40,7 +40,7 @@ Example:
 	Predkami dannaya mudrost` narodnaya!
 	
 
-## RoundXX.txt
+## Round test cases
 
 It should be file with cyrillic text.
 

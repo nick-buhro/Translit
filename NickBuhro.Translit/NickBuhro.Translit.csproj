@@ -27,15 +27,11 @@
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <None Update="Implementation\CyrillycToLatinConverter.tt">
+    <None Update="TransliterationT4.tt">
+      <LastGenOutput>TransliterationT4.generated.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CyrillycToLatinConverter.generated.cs</LastGenOutput>
-    </None>
-    <None Update="Implementation\LatinToCyrillicConverter.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LatinToCyrillicConverter.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -44,15 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Implementation\CyrillycToLatinConverter.generated.cs">
+    <Compile Update="TransliterationT4.generated.cs">
+      <DependentUpon>TransliterationT4.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>CyrillycToLatinConverter.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Implementation\LatinToCyrillicConverter.generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LatinToCyrillicConverter.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

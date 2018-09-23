@@ -2,18 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NickBuhro.Translit\NickBuhro.Translit.csproj" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\Definition.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Definition.generated.cs</LastGenOutput>
-    </None>
+    <ProjectReference Include="..\NickBuhro.Translit\NickBuhro.Translit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,11 +18,30 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Assets\Definition.generated.cs">
+    <Compile Update="v12\CyrillycToLatinConverter.generated.cs">
+      <DependentUpon>CyrillycToLatinConverter.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Definition.tt</DependentUpon>
     </Compile>
+    <Compile Update="v12\LatinToCyrillicConverter.generated.cs">
+      <DependentUpon>LatinToCyrillicConverter.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="v12\CyrillycToLatinConverter.tt">
+      <LastGenOutput>CyrillycToLatinConverter.generated.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="v12\LatinToCyrillicConverter.tt">
+      <LastGenOutput>LatinToCyrillicConverter.generated.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="v12\Rules.txt">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
 
 </Project>

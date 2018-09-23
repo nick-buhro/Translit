@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -10,13 +10,36 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coveralls.io" Version="1.3.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <None Remove="Assets\Alphabet.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Alphabet.txt" />
+    <EmbeddedResource Include="Assets\Exact\Be_E01.txt" />
+    <EmbeddedResource Include="Assets\Round\Be_R01.txt" />
+    <EmbeddedResource Include="Assets\Round\Bu_R01.txt" />
+    <EmbeddedResource Include="Assets\Round\Ma_R01.txt" />
+    <EmbeddedResource Include="Assets\Exact\Ru_E01.txt" />
+    <EmbeddedResource Include="Assets\Exact\Ru_E02.txt" />
+    <EmbeddedResource Include="Assets\Round\Ru_R01.txt" />
+    <EmbeddedResource Include="Assets\Round\Ru_R02.txt" />
+    <EmbeddedResource Include="Assets\Round\Uk_R01.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coveralls.io" Version="1.4.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
-    <PackageReference Include="ReportGenerator" Version="2.5.8" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.console" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="ReportGenerator" Version="3.1.2" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <ProjectReference Include="..\NickBuhro.Translit\NickBuhro.Translit.csproj" />
   </ItemGroup>
 

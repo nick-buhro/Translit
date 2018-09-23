@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NickBuhro.Translit.Tests", "NickBuhro.Translit.Tests\NickBuhro.Translit.Tests.csproj", "{2277F7FC-79CF-44E1-BD06-09F2ADCDB1C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NickBuhro.Translit.Tests", "NickBuhro.Translit.Tests\NickBuhro.Translit.Tests.csproj", "{2277F7FC-79CF-44E1-BD06-09F2ADCDB1C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NickBuhro.Translit.Benchmark", "NickBuhro.Translit.Benchmark\NickBuhro.Translit.Benchmark.csproj", "{1CDBA3DF-03C2-47EA-BEA7-7907D27B6538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NickBuhro.Translit.Benchmark", "NickBuhro.Translit.Benchmark\NickBuhro.Translit.Benchmark.csproj", "{1CDBA3DF-03C2-47EA-BEA7-7907D27B6538}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,5 +40,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A95EF12C-4113-4342-A37C-03F0AB26F193}
 	EndGlobalSection
 EndGlobal

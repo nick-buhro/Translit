@@ -25,6 +25,16 @@ It could be specified concrete language from list:
 * Bulgarian
 * Makedonian
 
+## Installation
+
+It's available over [NuGet](https://www.nuget.org/packages/NickBuhro.Translit/):
+
+``` PowerShell
+
+Install-Package NickBuhro.Translit
+
+```
+
 ## Usage
 
 ``` C#
@@ -40,6 +50,13 @@ var cyrillic = Transliteration.LatinToCyrillic("Predkami dannaya mudrost` narodn
 Console.WriteLine(cyrillic);	// Output: Предками данная мудрость народная!
 
 ```
+
+## Running the tests
+
+Solution includes:
+- [NickBuhro.Translit.Tests](./NickBuhro.Translit.Tests) project defines 1000+ xUnit tests;
+- [NickBuhro.Translit.Benchmark](./NickBuhro.Translit.Benchmark) allows to analyze library performans and compare different implementations;
+- [coverage.bat](./coverage.bat) script allows to analyze code coverage using OpenCover, generate reports and publish results to [coveralls.io](https://coveralls.io/github/nick-buhro/Translit).
 
 ## Compatibility
 
