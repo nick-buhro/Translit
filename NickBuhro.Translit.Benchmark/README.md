@@ -16,7 +16,7 @@ Frequency=1757813 Hz, Resolution=568.8887 ns, Timer=TSC
 ```
 | Method | Asset |            Mean | Scaled |     Gen 0 |     Gen 1 |     Gen 2 |  Allocated |
 |------- |------ |----------------:|-------:|----------:|----------:|----------:|-----------:|
-| **C2Lv12** |   **Big** |  **4,380,925 ns** |   **1.00** |  **179.6875** |  **156.2500** |   **93.7500** |   **798475 B** |
+| **C2Lv12** |   **Big** |  **4,380,925 ns** |   **1.00** |  **179** |  **156** |   **93** |   **798475 B** |
 | L2Cv12 |   Big | 34,817,752 ns |   7.95 | 5600 | 5600 | 5600 | 22718376 B |
 | C2Lv13 |   Big |  4,899,186 ns |   1.12 |  203 |  195 |  195 |   785008 B |
 | L2Cv13 |   Big |  5,428,736 ns |   1.24 |  187 |  187 |  187 |   751860 B |
@@ -30,8 +30,8 @@ Frequency=1757813 Hz, Resolution=568.8887 ns, Timer=TSC
 | C2Lv14 | Small |        127 ns |   0.13 |    0.1066 |         - |         - |      336 B |
 | L2Cv14 | Small |        142 ns |   0.15 |    0.0608 |         - |         - |      192 B |
 
-- C2LvXX - cyrillic to latin transliteration;
-- L2CvXX - latin to cyrillic transliteration;
-- XXXv12 - library version 1.2 (first implementation with replacement dictionaries);
-- XXXv13 - library version 1.3 (unpublished impementation based on FSM with preconfigured state transitions);
-- XXXv14 - library version 1.4 (code generated FSM on switches).
+- `C2LvXX` - cyrillic to latin transliteration;
+- `L2CvXX` - latin to cyrillic transliteration;
+- `XXXv12` - library version 1.2 (first implementation with replacement dictionaries);
+- `XXXv13` - library version 1.3 (unpublished impementation based on FSM with preconfigured state transitions);
+- `XXXv14` - library version 1.4 (code generated FSM on switches).
