@@ -31,7 +31,7 @@ It's available over [NuGet](https://www.nuget.org/packages/NickBuhro.Translit/):
 
 ``` PowerShell
 
-	Install-Package NickBuhro.Translit
+Install-Package NickBuhro.Translit
 
 ```
 
