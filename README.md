@@ -1,15 +1,11 @@
 # NickBuhro.Translit
 
-C# library for cyrillic-latin transliteration.
-
 [![License](https://img.shields.io/badge/license-MIT-red.svg)](https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE)
 [![NuGet Badge](https://buildstats.info/nuget/NickBuhro.Translit)](https://www.nuget.org/packages/NickBuhro.Translit/)
 [![Build status](https://ci.appveyor.com/api/projects/status/5xxmbn82hu9762n7?svg=true)](https://ci.appveyor.com/project/nick-buhro/translit)
 [![Coverage Status](https://coveralls.io/repos/github/nick-buhro/Translit/badge.svg?branch=master)](https://coveralls.io/github/nick-buhro/Translit?branch=master)
 
-## Features
-
-It implements transliteration by 
+C# library for cyrillic-latin transliteration by 
 [ISO 9](https://en.wikipedia.org/wiki/ISO_9) 
 ([ГОСТ 7.79—2000](https://ru.wikipedia.org/wiki/ISO_9#.D0.93.D0.9E.D0.A1.D0.A2_7.79.E2.80.942000)) 
 on System B (only for slavik languages).

@@ -11,8 +11,12 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/nick-buhro/Translit</PackageProjectUrl>
     <Copyright>Copyright (c) 2016 Nicholas Buhro</Copyright>
-    <Description>C# library for cyrillic-latin transliteration by GOST 7.79-2000 (ISO 9) System B (only for slavik languages).</Description>
-    <PackageReleaseNotes>Support for .NET Standard 1.3 and .NET Framework 2.0.</PackageReleaseNotes>
+    <Description>
+      C# library for cyrillic-latin transliteration by GOST 7.79-2000 (ISO 9) System B (only for slavik languages).
+      Both direction transliteration is supported: cyrillic to latin and latin to cyrillic.
+      Supported languages: Russian, Belorussian, Ukrainian, Bulgarian and Makedonian.
+    </Description>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <RepositoryUrl></RepositoryUrl>
     <RepositoryType></RepositoryType>
   </PropertyGroup>
