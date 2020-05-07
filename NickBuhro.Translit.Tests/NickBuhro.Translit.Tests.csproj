@@ -10,20 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Alphabet.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Assets\Alphabet.txt" />
-    <EmbeddedResource Include="Assets\Exact\Be_E01.txt" />
-    <EmbeddedResource Include="Assets\Round\Be_R01.txt" />
-    <EmbeddedResource Include="Assets\Round\Bu_R01.txt" />
-    <EmbeddedResource Include="Assets\Round\Ma_R01.txt" />
-    <EmbeddedResource Include="Assets\Exact\Ru_E01.txt" />
-    <EmbeddedResource Include="Assets\Exact\Ru_E02.txt" />
-    <EmbeddedResource Include="Assets\Round\Ru_R01.txt" />
-    <EmbeddedResource Include="Assets\Round\Ru_R02.txt" />
-    <EmbeddedResource Include="Assets\Round\Uk_R01.txt" />
+    <EmbeddedResource Include="Assets\Exact\*.txt" />
+    <EmbeddedResource Include="Assets\Round\*.txt" />
   </ItemGroup>
 
   <ItemGroup>
