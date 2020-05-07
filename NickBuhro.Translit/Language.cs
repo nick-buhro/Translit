@@ -1,7 +1,7 @@
 ﻿namespace NickBuhro.Translit
 {
     /// <summary>
-    /// Slavik language with cyrillic alphabet.
+    /// Slavic language with cyrillic alphabet.
     /// </summary>
     public enum Language
     {
@@ -11,7 +11,7 @@
         Unknown,
 
         /// <summary>
-        /// Russain language.
+        /// Russian language.
         /// </summary>
         Russian,
 
@@ -21,7 +21,7 @@
         Belorussian,
 
         /// <summary>
-        /// Ukranian language.
+        /// Ukrainian language.
         /// </summary>
         Ukrainian,
 
