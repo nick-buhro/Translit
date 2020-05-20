@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 namespace NickBuhro.Translit
 {
     /// <summary>
-    ///  Cyrillic-latin transliteration (support only slavik languages) by GOST 7.79-2000 (ISO 9).
+    ///  Cyrillic-latin transliteration (support only slavic languages) by GOST 7.79-2000 (ISO 9).
     /// </summary>
     public static partial class Transliteration
     {
@@ -16,7 +16,7 @@ namespace NickBuhro.Translit
         /// </summary>
         /// <param name="cyrillicSource">Source string.</param>
         /// <param name="language">Specify it to determine correct transliteration rules 
-        /// (it can be a little bit defferent for languages).</param>
+        /// (it can be a little bit different for languages).</param>
         /// <returns>Transliterated string.</returns>
         public static string CyrillicToLatin(string cyrillicSource, Language language = Language.Unknown)
         {
@@ -46,7 +46,7 @@ namespace NickBuhro.Translit
         /// </summary>
         /// <param name="latinSource">Source string.</param>
         /// <param name="language">Specify it to determine correct transliteration rules 
-        /// (it can be a little bit defferent for languages).</param>
+        /// (it can be a little bit different for languages).</param>
         /// <returns>Cyrillic string.</returns>
         public static string LatinToCyrillic(string latinSource, Language language = Language.Unknown)
         {
