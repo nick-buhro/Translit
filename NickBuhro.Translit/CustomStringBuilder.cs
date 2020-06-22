@@ -9,13 +9,19 @@ namespace NickBuhro.Translit
     {
         private readonly char[] _array;
         private int _index;
-
-        public CustomStringBuilder(int capacity)
-        {
 #if NET45 || NETSTANDARD1_3
-            _array = ArrayPool<char>.Shared.Rent(capacity);
-#else
-            _array = new char[capacity];
+        private readonly bool _arrayPooling;
+#endif
+
+        public CustomStringBuilder(int capacity, bool? preferArrayPooling = null)
+        {
+#if NET45 || NETSTANDARD1_3            
+            _arrayPooling = preferArrayPooling ?? capacity > 1000;
+            _array = _arrayPooling
+                ? ArrayPool<char>.Shared.Rent(capacity)
+                : _array = new char[capacity];            
+#else            
+            _array = new char[capacity];            
 #endif
             _index = 0;
         }
@@ -33,7 +39,8 @@ namespace NickBuhro.Translit
         public void Dispose()
         {
 #if NET45 || NETSTANDARD1_3
-            ArrayPool<char>.Shared.Return(_array);
+            if (_arrayPooling)
+                ArrayPool<char>.Shared.Return(_array);
 #endif
         }
     }

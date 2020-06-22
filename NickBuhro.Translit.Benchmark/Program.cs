@@ -7,8 +7,8 @@ namespace NickBuhro.Translit.Benchmark
     {
         public static void Main()
         {
-            var summary = BenchmarkRunner.Run<Benchmark>();
-            Console.WriteLine(summary);
+            Console.WriteLine(BenchmarkRunner.Run<Benchmark>());
+            Console.WriteLine(BenchmarkRunner.Run<CustomStringBuilderBenchmark>());
             Console.ReadKey();
         }
     }

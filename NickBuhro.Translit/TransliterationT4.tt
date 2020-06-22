@@ -42,9 +42,9 @@ namespace NickBuhro.Translit
 	partial class Transliteration
 	{
 <# foreach (var md in definitions) { var fsm = BuildFSM(md.replacements); #>
-		internal static string <#=md.name#>(string text)
+		internal static string <#=md.name#>(string text, bool? arrayPooling = null)
 		{
-			using (var sb = new CustomStringBuilder(text.Length<#= md.name[0] == 'C' ? " * 3" : ""  #>))
+			using (var sb = new CustomStringBuilder(text.Length<#= md.name[0] == 'C' ? " * 3" : ""  #>, arrayPooling))
             {
 			
 			var state = 0;			
