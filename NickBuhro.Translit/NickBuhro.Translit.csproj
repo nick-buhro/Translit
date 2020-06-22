@@ -9,6 +9,7 @@
     <Authors>Nicholas Buhro</Authors>    
     <PackageTags>translit transliteration cyrillic slavic iso-9</PackageTags>
     <PackageLicenseUrl>https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE</PackageLicenseUrl>
+    <NoWarn>$(NoWarn);NU5125</NoWarn> <!--TODO: update CI -> The 'licenseUrl' element will be deprecated. Consider using the 'license' element instead.-->
     <PackageProjectUrl>https://github.com/nick-buhro/Translit</PackageProjectUrl>
     <Copyright>Copyright (c) 2016 Nicholas Buhro</Copyright>
     <Description>
@@ -49,6 +50,10 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
   </ItemGroup>
 
 </Project>

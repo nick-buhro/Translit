@@ -44,7 +44,8 @@ namespace NickBuhro.Translit
 <# foreach (var md in definitions) { var fsm = BuildFSM(md.replacements); #>
 		internal static string <#=md.name#>(string text)
 		{
-			var sb = new CustomStringBuilder(text.Length<#= md.name[0] == 'C' ? " * 3" : ""  #>);
+			using (var sb = new CustomStringBuilder(text.Length<#= md.name[0] == 'C' ? " * 3" : ""  #>))
+            {
 			
 			var state = 0;			
 			for (var i = 0; i < text.Length; i++)
@@ -94,6 +95,7 @@ namespace NickBuhro.Translit
 			}
 <# } #>
 			return sb.ToString();
+            }
 		}
 
 <# } #>
