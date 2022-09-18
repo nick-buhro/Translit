@@ -46,7 +46,7 @@ before_build:
 
 after_test:
   - if "%CONFIGURATION%"=="Debug" (coverage.bat)
-  - if "%CONFIGURATION%"=="Debug" (appveyor PushArtifact summary.mht)
+  - if "%CONFIGURATION%"=="Debug" (appveyor PushArtifact Summary.mht)
 
 #---------------------------------#
 #      artifacts configuration    #
