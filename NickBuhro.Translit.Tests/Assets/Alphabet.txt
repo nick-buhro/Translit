@@ -15,7 +15,8 @@ s					z`
 и	i		y`	i	i
 й	j	j	j	j	
 j					j
-i	i	i	i	i	
+і			i		
+i	i	i		i	
 ї			yi		
 к	k	k	k	k	k
 ќ					k`
@@ -67,7 +68,8 @@ S					Z`
 И	I		Y`	I	I
 Й	J	J	J	J	
 J					J
-I	I	I	I	I	
+І			I		
+I	I	I		I	
 Ї			Yi		
 К	K	K	K	K	K
 Ќ					K`

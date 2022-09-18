@@ -142,7 +142,8 @@ internal sealed class Rules
         { "и", new [] { "i", null, "y`", "i", "i" } },
         { "й", new [] { "j", "j", "j", "j", null } },
         { "j", new [] { null, null, null, null, "j" } },
-        { "i", new [] { "i", "i", "i", "i", null } },
+        { "і", new [] { null, null, "i", null, null } },    // 0x456
+        { "i", new [] { "i", "i", null, "i", null } },      // 0x69
         { "ї", new [] { null, null, "yi", null, null } },
         { "к", new [] { "k", "k", "k", "k", "k" } },
         { "ќ", new [] { null, null, null, null, "k`" } },
